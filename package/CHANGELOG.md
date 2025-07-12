@@ -1,3 +1,10 @@
+## 0.6.1
+
+### What's Changed
+
+- Add default constructor for `RequestBodyLimit`
+- Add default constructor for `RequestTimeLimit`
+
 ## 0.6.0 (2025-05-20)
 
 ### What's New
