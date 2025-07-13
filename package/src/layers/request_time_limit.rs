@@ -78,7 +78,21 @@ where
 /// }
 /// ```
 ///
-/// ## Example
+/// ## Examples
+///
+/// Create a layer with default limit:
+///
+/// ```no_run
+/// use std::time::Duration;
+///
+/// use axum::Router;
+/// use jder_axum::layers::RequestTimeLimit;
+///
+/// let app: Router = Router::new()
+///     .layer(RequestTimeLimit::new());
+/// ```
+///
+/// Create a layer with custom limit:
 ///
 /// ```no_run
 /// use std::time::Duration;

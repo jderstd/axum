@@ -105,7 +105,23 @@ where
 /// }
 /// ```
 ///
-/// ## Example
+/// ## Examples
+///
+/// Create a a layer with default limit:
+///
+/// ```no_run
+/// use axum::{
+///     Router,
+///     extract::DefaultBodyLimit,
+/// };
+/// use jder_axum::layers::RequestBodyLimit;
+///
+/// let app: Router = Router::new()
+///     .layer(DefaultBodyLimit::disable())
+///     .layer(RequestBodyLimit::new());
+/// ```
+///
+/// Create a a layer with custom limit:
 ///
 /// ```no_run
 /// use axum::{

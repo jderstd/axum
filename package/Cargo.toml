@@ -1,6 +1,6 @@
 [package]
 name = "jder_axum"
-version = "0.6.0"
+version = "0.6.1"
 authors = ["Alpheus Tang"]
 edition = "2024"
 rust-version = "1.85.0"
