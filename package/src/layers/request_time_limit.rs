@@ -76,9 +76,11 @@ where
 /// {
 ///     "success": false,
 ///     "data": null,
-///     "error": {
-///         "code": "timeout"
-///     }
+///     "errors": [
+///         {
+///             "code": "timeout"
+///         }
+///     ]
 /// }
 /// ```
 ///

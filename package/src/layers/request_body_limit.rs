@@ -72,7 +72,7 @@ where
                         .error(
                             JsonResponseError::builder()
                                 .code(JsonResponseErrorCode::TooLarge.as_str())
-                                .path(["body"])
+                                .path(["request", "body"])
                                 .build(),
                         )
                         .send();
@@ -85,7 +85,7 @@ where
                         .error(
                             JsonResponseError::builder()
                                 .code(JsonResponseErrorCode::Parse.as_str())
-                                .path(["body"])
+                                .path(["request", "body"])
                                 .build(),
                         )
                         .send();
@@ -106,10 +106,15 @@ where
 /// {
 ///     "success": false,
 ///     "data": null,
-///     "error": {
-///         "code": "too_large",
-///         "field": "body"
-///     }
+///     "errors": [
+///         {
+///             "code": "too_large",
+///             "field": [
+///                 "request",
+///                 "body"
+///             ]
+///         }
+///     ]
 /// }
 /// ```
 ///
