@@ -3,7 +3,7 @@ use serde::Serialize;
 
 use crate::response::{
     Response,
-    json::{JsonResponseState, create_json_response_send},
+    json::main::{JsonResponseState, create_json_response_send},
 };
 
 /// Functions for creating a success response.

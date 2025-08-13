@@ -8,7 +8,7 @@ use tower_service::Service;
 
 use crate::response::{
     Response as Res,
-    json::{CreateJsonResponse, JsonResponseErrorCode},
+    json::{CreateJsonResponse, JsonResponseError, JsonResponseErrorCode},
 };
 
 /// Default maximum body size in bytes.
@@ -69,8 +69,12 @@ where
                 {
                     let res: Res = CreateJsonResponse::failure()
                         .status(StatusCode::PAYLOAD_TOO_LARGE)
-                        .error_code(JsonResponseErrorCode::TooLarge.as_str())
-                        .error_field("body")
+                        .error(
+                            JsonResponseError::builder()
+                                .code(JsonResponseErrorCode::TooLarge.as_str())
+                                .path(["body"])
+                                .build(),
+                        )
                         .send();
 
                     Ok(res)
@@ -78,8 +82,12 @@ where
                 | Err(_) => {
                     let res: Res = CreateJsonResponse::failure()
                         .status(StatusCode::BAD_REQUEST)
-                        .error_code(JsonResponseErrorCode::Parse.as_str())
-                        .error_field("body")
+                        .error(
+                            JsonResponseError::builder()
+                                .code(JsonResponseErrorCode::Parse.as_str())
+                                .path(["body"])
+                                .build(),
+                        )
                         .send();
 
                     Ok(res)

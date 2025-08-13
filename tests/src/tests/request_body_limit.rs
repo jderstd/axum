@@ -35,7 +35,7 @@ mod test {
 
         assert_eq!(res.success, false);
 
-        let err: JsonResponseError = res.error.unwrap();
+        let err: JsonResponseError = res.errors[0].clone();
 
         assert_eq!(err.code, JsonResponseErrorCode::TooLarge.as_str());
     }
@@ -69,7 +69,7 @@ mod test {
 
         assert_eq!(res.success, false);
 
-        let err: JsonResponseError = res.error.unwrap();
+        let err: JsonResponseError = res.errors[0].clone();
 
         assert_eq!(err.code, JsonResponseErrorCode::TooLarge.as_str());
     }

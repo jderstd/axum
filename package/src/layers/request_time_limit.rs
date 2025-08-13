@@ -6,7 +6,7 @@ use tower_service::Service;
 
 use crate::response::{
     Response as Res,
-    json::{CreateJsonResponse, JsonResponseErrorCode},
+    json::{CreateJsonResponse, JsonResponseError, JsonResponseErrorCode},
 };
 
 /// Default maximum time in seconds.
@@ -53,7 +53,11 @@ where
                 | Err(_) => {
                     let res: Res = CreateJsonResponse::failure()
                         .status(StatusCode::REQUEST_TIMEOUT)
-                        .error_code(JsonResponseErrorCode::Timeout.as_str())
+                        .error(
+                            JsonResponseError::builder()
+                                .code(JsonResponseErrorCode::Timeout.as_str())
+                                .build(),
+                        )
                         .send();
 
                     Ok(res)

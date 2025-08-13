@@ -1,3 +1,40 @@
+## 0.7.0
+
+### Breaking Changes
+
+- Support new standard
+
+### What's New
+
+- Add `builder` function for `JsonResponseError`
+
+### Migrating from 0.6.X to 0.7.0
+
+```diff
+use jder_axum::response::{
+    Response,
+    json::{
+        CreateJsonResponse,
+        JsonResponseError,
+    },
+};
+
+async fn route() -> Response {
+    CreateJsonResponse::failure()
+-       .error_code("parse")
+-       .error_field("title")
+-       .error_message("Invalid title")
++       .error(
++           JsonResponseError::builder()
++               .code("parse")
++               .path(["json", "title"])
++               .message("Invalid title")
++               .build(),
++       )
+        .send()
+}
+```
+
 ## 0.6.1 (2025-07-13)
 
 ### What's Changed

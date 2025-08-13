@@ -22,11 +22,12 @@ impl From<TypedMultipartError> for TypedMultipartFailureResponse {
         Self {
             success: false,
             data: None,
-            error: Some(JsonResponseError {
-                code: JsonResponseErrorCode::Parse.to_string(),
-                field: None,
-                message: Some(error.to_string()),
-            }),
+            errors: vec![
+                JsonResponseError::builder()
+                    .code(JsonResponseErrorCode::Parse.as_str())
+                    .message(error.to_string())
+                    .build(),
+            ],
         }
     }
 }

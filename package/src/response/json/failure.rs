@@ -4,8 +4,8 @@ use serde::Serialize;
 use crate::response::{
     Response,
     json::{
-        JsonResponseError, JsonResponseState, create_json_response_send,
-        error::JsonResponseErrorCode,
+        error::JsonResponseError,
+        main::{JsonResponseState, create_json_response_send},
     },
 };
 
@@ -68,7 +68,7 @@ impl<D: Serialize> JsonFailureResponseFunctions<D> {
         self
     }
 
-    /// Set a header for the response.
+    /// Add a header for the response.
     ///
     /// For validation on key value, see
     /// [`get_header_from_key_value`](crate::response::header::get_header_from_key_value).
@@ -127,7 +127,7 @@ impl<D: Serialize> JsonFailureResponseFunctions<D> {
         self
     }
 
-    /// Set multiple headers for the response.
+    /// Add multiple headers for the response.
     ///
     /// For validation on key value, see
     /// [`get_header_from_key_value`](crate::response::header::get_header_from_key_value).
@@ -198,9 +198,7 @@ impl<D: Serialize> JsonFailureResponseFunctions<D> {
 }
 
 impl<D: Serialize> JsonFailureResponseFunctions<D> {
-    /// Set an error for the response.
-    /// This action will overwrite `error_code`,
-    /// `error_field`, and `error_message` if they are set.
+    /// Add an error for the response.
     ///
     /// ## Example
     ///
@@ -208,18 +206,20 @@ impl<D: Serialize> JsonFailureResponseFunctions<D> {
     /// use jder_axum::response::{
     ///     Response,
     ///     json::{
-    ///         CreateJsonResponse,
     ///         JsonResponseError,
+    ///         CreateJsonResponse,
     ///     },
     /// };
     ///
     /// async fn route() -> Response {
+    ///     let error: JsonResponseError = JsonResponseError::builder()
+    ///         .code("parse")
+    ///         .path(["json", "title"])
+    ///         .message("Invalid title")
+    ///         .build();
+    ///
     ///     CreateJsonResponse::failure()
-    ///         .error(JsonResponseError {
-    ///             code: "parse_error".to_string(),
-    ///             field: Some("title".to_string()),
-    ///             message: Some("Invalid title".to_string()),
-    ///         })
+    ///         .error(error)
     ///         .send()
     /// }
     /// ```
@@ -227,114 +227,56 @@ impl<D: Serialize> JsonFailureResponseFunctions<D> {
         mut self,
         error: JsonResponseError,
     ) -> Self {
-        self.state.error = Some(error);
+        self.state.errors.push(error);
 
         self
     }
 
-    /// Set an error code for the response.
+    /// Add multiple errors for the response.
     ///
     /// ## Example
     ///
     /// ```no_run
     /// use jder_axum::response::{
     ///     Response,
-    ///     json::CreateJsonResponse,
+    ///     json::{
+    ///         JsonResponseError,
+    ///         CreateJsonResponse,
+    ///     },
     /// };
     ///
     /// async fn route() -> Response {
+    ///     let error_title: JsonResponseError = JsonResponseError::builder()
+    ///         .code("parse")
+    ///         .path(["json", "title"])
+    ///         .message("Invalid title")
+    ///         .build();
+    ///
+    ///     let error_num: JsonResponseError = JsonResponseError::builder()
+    ///         .code("parse")
+    ///         .path(["json", "num"])
+    ///         .message("Invalid num")
+    ///         .build();
+    ///
     ///     CreateJsonResponse::failure()
-    ///         .error_code("parse_error")
+    ///         .errors([
+    ///             error_title,
+    ///             error_num,
+    ///         ])
     ///         .send()
     /// }
     /// ```
-    pub fn error_code<S: Into<String>>(
+    pub fn errors<V, E>(
         mut self,
-        code: S,
-    ) -> Self {
-        self.state.error = Some(JsonResponseError {
-            code: code.into(),
-            field: match &self.state.error {
-                | Some(error) => error.field.clone(),
-                | None => None,
-            },
-            message: match self.state.error {
-                | Some(error) => error.message.clone(),
-                | None => None,
-            },
-        });
-
-        self
-    }
-
-    /// Set an error field for the response.
-    ///
-    /// ## Example
-    ///
-    /// ```no_run
-    /// use jder_axum::response::{
-    ///     Response,
-    ///     json::CreateJsonResponse,
-    /// };
-    ///
-    /// async fn route() -> Response {
-    ///     CreateJsonResponse::failure()
-    ///         .error_field("title")
-    ///         .send()
-    /// }
-    /// ```
-    pub fn error_field<S: Into<String>>(
-        mut self,
-        field: S,
-    ) -> Self {
-        self.state.error = Some(JsonResponseError {
-            code: match &self.state.error {
-                | Some(error) => &error.code,
-                | None => JsonResponseErrorCode::Unknown.as_str(),
-            }
-            .to_string(),
-            field: Some(field.into()),
-            message: match self.state.error {
-                | Some(error) => error.message.clone(),
-                | None => None,
-            },
-        });
-
-        self
-    }
-
-    /// Set an error message for the response.
-    ///
-    /// ## Example
-    ///
-    /// ```no_run
-    /// use jder_axum::response::{
-    ///     Response,
-    ///     json::CreateJsonResponse,
-    /// };
-    ///
-    /// async fn route() -> Response {
-    ///     CreateJsonResponse::failure()
-    ///         .error_message("Invalid title")
-    ///         .send()
-    /// }
-    /// ```
-    pub fn error_message<S: Into<String>>(
-        mut self,
-        message: S,
-    ) -> Self {
-        self.state.error = Some(JsonResponseError {
-            code: match &self.state.error {
-                | Some(error) => &error.code,
-                | None => JsonResponseErrorCode::Unknown.as_str(),
-            }
-            .to_string(),
-            field: match self.state.error {
-                | Some(error) => error.field,
-                | None => None,
-            },
-            message: Some(message.into()),
-        });
+        errors: V,
+    ) -> Self
+    where
+        V: IntoIterator<Item = E>,
+        E: Into<JsonResponseError>,
+    {
+        for error in errors {
+            self = self.error(error.into());
+        }
 
         self
     }

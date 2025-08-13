@@ -10,7 +10,9 @@ use http::{StatusCode, request::Parts};
 
 use crate::response::{
     Response,
-    json::{CreateJsonResponse, error::JsonResponseErrorCode},
+    json::{
+        CreateJsonResponse, JsonResponseError, error::JsonResponseErrorCode,
+    },
 };
 
 /// Extractor and response that works with typed header values from [`headers`].
@@ -67,9 +69,13 @@ where
             | Ok(val) => Ok(Self(val.0)),
             | Err(rej) => Err(CreateJsonResponse::failure()
                 .status(StatusCode::BAD_REQUEST)
-                .error_code(JsonResponseErrorCode::Parse.as_str())
-                .error_field(rej.name().as_str())
-                .error_message(format!("{:?}", rej.reason()))
+                .error(
+                    JsonResponseError::builder()
+                        .code(JsonResponseErrorCode::Parse.as_str())
+                        .path([rej.name().as_str()])
+                        .message(format!("{:?}", rej.reason()))
+                        .build(),
+                )
                 .send()),
         }
     }
@@ -95,9 +101,13 @@ where
             | Ok(None) => Ok(None),
             | Err(rej) => Err(CreateJsonResponse::failure()
                 .status(StatusCode::BAD_REQUEST)
-                .error_code(JsonResponseErrorCode::Parse.as_str())
-                .error_field(rej.name().as_str())
-                .error_message(format!("{:?}", rej.reason()))
+                .error(
+                    JsonResponseError::builder()
+                        .code(JsonResponseErrorCode::Parse.as_str())
+                        .path([rej.name().as_str()])
+                        .message(format!("{:?}", rej.reason()))
+                        .build()
+                )
                 .send()),
         }
     }
