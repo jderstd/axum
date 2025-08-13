@@ -109,7 +109,7 @@ where
 ///     "errors": [
 ///         {
 ///             "code": "too_large",
-///             "field": [
+///             "path": [
 ///                 "request",
 ///                 "body"
 ///             ]
