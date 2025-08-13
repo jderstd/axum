@@ -31,6 +31,14 @@ test:
 server:
     cargo run -p tests
 
+# Publish package as dry-run
+publish-try:
+    cd ./package && cargo publish --dry-run
+
+# Publish package
+publish:
+    cd ./package && cargo publish
+
 # Clean
 clean:
     cargo clean
