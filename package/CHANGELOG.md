@@ -1,3 +1,16 @@
+## 0.8.0
+
+### What's New
+
+- Add `new` functions for `JsonResponseErrorCode`
+- Add `Default` derive for `JsonResponseErrorCode`
+- Add `new`, `from` functions for `JsonResponseError` 
+- Add `Default` derive for `JsonResponseError`
+
+### What's Changes
+
+- Optimize internal functions
+
 ## 0.7.0 (2025-08-13)
 
 ### Breaking Changes
