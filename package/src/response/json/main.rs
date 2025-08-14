@@ -40,6 +40,7 @@ pub(crate) struct JsonResponseState<D> {
 pub(crate) fn create_json_response_send<D: Serialize>(
     state: JsonResponseState<D>
 ) -> Response {
+    // a server error that supposed to be always work
     let server_error: Response = Response::builder()
         .status(StatusCode::INTERNAL_SERVER_ERROR)
         .header(header::CONTENT_TYPE, "application/json")
@@ -49,31 +50,32 @@ pub(crate) fn create_json_response_send<D: Serialize>(
     // header map error
     if state.is_header_map_failed {
         // create error
-        let res_error: JsonResponseError = JsonResponseError {
-            code: JsonResponseErrorCode::Parse.to_string(),
-            path: vec!["response".to_string(), "header_map".to_string()],
-            message: Some("Failed to create header map.".to_string()),
-        };
-
         let res: JsonResponse<D> = JsonResponse {
             success: false,
             data: None,
-            errors: vec![res_error],
+            errors: vec![
+                JsonResponseError::builder()
+                    .code(JsonResponseErrorCode::Parse.to_string())
+                    .path(["response", "header_map"])
+                    .message("Failed to create header map.".to_string())
+                    .build(),
+            ],
         };
 
         // parse body
         let body: String = match serde_json::to_string(&res) {
             | Ok(body) => body,
-            | Err(_) => {
-                return server_error;
-            },
+            | Err(_) => return server_error,
         };
 
-        return Response::builder()
+        return match Response::builder()
             .status(StatusCode::BAD_REQUEST)
             .header(header::CONTENT_TYPE, "application/json")
             .body(Body::from(body))
-            .unwrap();
+        {
+            | Ok(res) => res,
+            | Err(_) => server_error,
+        };
     }
 
     // create response builder
@@ -85,7 +87,10 @@ pub(crate) fn create_json_response_send<D: Serialize>(
 
     header_map.append(
         header::CONTENT_TYPE,
-        HeaderValue::from_str("application/json").unwrap(),
+        match HeaderValue::from_str("application/json") {
+            | Ok(value) => value,
+            | Err(_) => return server_error,
+        },
     );
 
     // push headers
@@ -105,13 +110,14 @@ pub(crate) fn create_json_response_send<D: Serialize>(
     // parse body
     let body: String = match serde_json::to_string(&res) {
         | Ok(body) => body,
-        | Err(_) => {
-            return server_error;
-        },
+        | Err(_) => return server_error,
     };
 
     // result
-    builder.body(Body::from(body)).unwrap()
+    match builder.body(Body::from(body)) {
+        | Ok(res) => res,
+        | Err(_) => server_error,
+    }
 }
 
 /// Create a JSON response for a route.
