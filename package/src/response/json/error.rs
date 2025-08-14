@@ -16,6 +16,11 @@ pub enum JsonResponseErrorCode {
 }
 
 impl JsonResponseErrorCode {
+    // Create a new JSON response error code with default value.
+    pub fn new() -> Self {
+        Self::Unknown
+    }
+
     /// Get the error code as `&str`.
     pub fn as_str(&self) -> &str {
         match self {
@@ -25,6 +30,12 @@ impl JsonResponseErrorCode {
             | Self::Server => "server",
             | Self::Unknown => "unknown",
         }
+    }
+}
+
+impl Default for JsonResponseErrorCode {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -70,7 +81,7 @@ impl JsonResponseErrorBuilder {
     pub fn new() -> Self {
         Self {
             error: JsonResponseError {
-                code: JsonResponseErrorCode::Unknown.to_string(),
+                code: JsonResponseErrorCode::new().to_string(),
                 path: Vec::new(),
                 message: None,
             },
@@ -176,6 +187,36 @@ pub struct JsonResponseError {
 }
 
 impl JsonResponseError {
+    /// Create a new JSON response error.
+    ///
+    /// ## Example
+    ///
+    /// ```no_run
+    /// use jder_axum::response::json::JsonResponseError;
+    ///
+    /// let error: JsonResponseError = JsonResponseError::new();
+    /// ```
+    pub fn new() -> Self {
+        Self {
+            code: JsonResponseErrorCode::new().to_string(),
+            path: Vec::new(),
+            message: None,
+        }
+    }
+
+    /// Create a JSON response error from an existing error.
+    ///
+    /// ## Example
+    ///
+    /// ```no_run
+    /// use jder_axum::response::json::JsonResponseError;
+    ///
+    /// let error: JsonResponseError = JsonResponseError::from(JsonResponseError::new());
+    /// ```
+    pub fn from(error: JsonResponseError) -> Self {
+        Self { code: error.code, path: error.path, message: error.message }
+    }
+
     /// A builder function to create a JSON response error.
     ///
     /// ## Example
@@ -191,5 +232,11 @@ impl JsonResponseError {
     /// ```
     pub fn builder() -> JsonResponseErrorBuilder {
         JsonResponseErrorBuilder::new()
+    }
+}
+
+impl Default for JsonResponseError {
+    fn default() -> Self {
+        Self::new()
     }
 }
