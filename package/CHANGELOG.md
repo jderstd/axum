@@ -4,7 +4,7 @@
 
 - Add `new` functions for `JsonResponseErrorCode`
 - Add `Default` derive for `JsonResponseErrorCode`
-- Add `new`, `from` functions for `JsonResponseError` 
+- Add `new` functions for `JsonResponseError`
 - Add `Default` derive for `JsonResponseError`
 
 ### What's Changes
