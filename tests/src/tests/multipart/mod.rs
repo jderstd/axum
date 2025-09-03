@@ -5,7 +5,7 @@ mod test {
     use axum_test::{TestServer, multipart::MultipartForm};
     use jder_axum::{
         extract::multipart::typed::TypedMultipartFailureResponse,
-        response::json::{JsonResponse, JsonResponseErrorCode},
+        response::json::{JsonResponse, ResponseError},
     };
 
     use crate::router::create_server;
@@ -45,10 +45,7 @@ mod test {
             .json::<TypedMultipartFailureResponse>();
 
         assert_eq!(res.success, false);
-        assert_eq!(
-            res.errors[0].code,
-            JsonResponseErrorCode::Parse.to_string()
-        );
+        assert_eq!(res.errors[0].code, ResponseError::Parse.as_code());
     }
 
     #[tokio::test]
@@ -62,10 +59,7 @@ mod test {
             .json::<TypedMultipartFailureResponse>();
 
         assert_eq!(res.success, false);
-        assert_eq!(
-            res.errors[0].code,
-            JsonResponseErrorCode::Parse.to_string()
-        );
+        assert_eq!(res.errors[0].code, ResponseError::Parse.as_code());
     }
 
     #[tokio::test]
@@ -83,9 +77,6 @@ mod test {
             .json::<TypedMultipartFailureResponse>();
 
         assert_eq!(res.success, false);
-        assert_eq!(
-            res.errors[0].code,
-            JsonResponseErrorCode::Parse.to_string()
-        );
+        assert_eq!(res.errors[0].code, ResponseError::Parse.as_code());
     }
 }

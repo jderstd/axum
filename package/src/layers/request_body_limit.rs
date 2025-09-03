@@ -8,7 +8,7 @@ use tower_service::Service;
 
 use crate::response::{
     Response as Res,
-    json::{CreateJsonResponse, JsonResponseError, JsonResponseErrorCode},
+    json::{CreateJsonResponse, JsonResponseError, ResponseError},
 };
 
 /// Default maximum body size in bytes.
@@ -67,16 +67,15 @@ where
                 | Err(err)
                     if err.downcast_ref::<LengthLimitError>().is_some() =>
                 {
-                    let code: JsonResponseErrorCode =
-                        JsonResponseErrorCode::TooLarge;
+                    let rer: ResponseError = ResponseError::TooLarge;
 
                     let res: Res = CreateJsonResponse::failure()
                         .status(StatusCode::PAYLOAD_TOO_LARGE)
                         .error(
                             JsonResponseError::builder()
-                                .code(code.as_str())
+                                .code(rer.as_code())
                                 .path(["request", "body"])
-                                .message(code.as_message())
+                                .message(rer.as_message())
                                 .build(),
                         )
                         .send();
@@ -84,16 +83,15 @@ where
                     Ok(res)
                 },
                 | Err(_) => {
-                    let code: JsonResponseErrorCode =
-                        JsonResponseErrorCode::Parse;
+                    let rer: ResponseError = ResponseError::Parse;
 
                     let res: Res = CreateJsonResponse::failure()
                         .status(StatusCode::BAD_REQUEST)
                         .error(
                             JsonResponseError::builder()
-                                .code(code.as_str())
+                                .code(rer.as_code())
                                 .path(["request", "body"])
-                                .message(code.as_message())
+                                .message(rer.as_message())
                                 .build(),
                         )
                         .send();

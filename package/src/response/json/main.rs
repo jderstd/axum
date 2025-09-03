@@ -5,8 +5,7 @@ use http::{
 use serde::{Deserialize, Serialize};
 
 use crate::response::json::{
-    JsonFailureResponseFunctions, JsonResponseErrorCode,
-    JsonSuccessResponseFunctions,
+    JsonFailureResponseFunctions, JsonSuccessResponseFunctions, ResponseError,
     error::{FAILURE_RESPONSE_DEFAULT, JsonResponseError},
 };
 
@@ -55,7 +54,7 @@ pub(crate) fn create_json_response_send<D: Serialize>(
             data: None,
             errors: vec![
                 JsonResponseError::builder()
-                    .code(JsonResponseErrorCode::Parse.to_string())
+                    .code(ResponseError::Parse.to_code())
                     .path(["response", "header_map"])
                     .message("Failed to create header map.".to_string())
                     .build(),

@@ -3,9 +3,7 @@ use axum_typed_multipart::{BaseMultipart, TypedMultipartError};
 
 use crate::{
     extract::json::Json,
-    response::json::{
-        JsonResponse, JsonResponseError, error::JsonResponseErrorCode,
-    },
+    response::json::{JsonResponse, JsonResponseError, error::ResponseError},
 };
 
 /// Multipart failure response.
@@ -24,7 +22,7 @@ impl From<TypedMultipartError> for TypedMultipartFailureResponse {
             data: None,
             errors: vec![
                 JsonResponseError::builder()
-                    .code(JsonResponseErrorCode::Parse.as_str())
+                    .code(ResponseError::Parse.as_code())
                     .message(error.to_string())
                     .build(),
             ],

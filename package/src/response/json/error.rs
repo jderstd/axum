@@ -1,8 +1,8 @@
 use serde::{Deserialize, Serialize};
 
-/// JSON response error code.
+/// Response error.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum JsonResponseErrorCode {
+pub enum ResponseError {
     /// Error while parsing.
     Parse,
     /// Payload too large.
@@ -15,14 +15,14 @@ pub enum JsonResponseErrorCode {
     Unknown,
 }
 
-impl JsonResponseErrorCode {
-    // Create a new JSON response error code with default value.
+impl ResponseError {
+    // Create a new response error with default value.
     pub fn new() -> Self {
         Self::Unknown
     }
 
     /// Get the error code as `&str`.
-    pub fn as_str(&self) -> &str {
+    pub fn as_code(&self) -> &str {
         match self {
             | Self::Parse => "parse",
             | Self::TooLarge => "too_large",
@@ -32,7 +32,12 @@ impl JsonResponseErrorCode {
         }
     }
 
-    /// Get the error message for the error code.
+    /// Get the error code as `String`.
+    pub fn to_code(&self) -> String {
+        self.as_code().to_string()
+    }
+
+    /// Get the error message as `&str`.
     pub fn as_message(&self) -> &str {
         match self {
             | Self::Parse => "Failed to parse the request",
@@ -42,20 +47,16 @@ impl JsonResponseErrorCode {
             | Self::Unknown => "Unknown error",
         }
     }
-}
 
-impl Default for JsonResponseErrorCode {
-    fn default() -> Self {
-        Self::new()
+    /// Get the error message as `String`.
+    pub fn to_message(&self) -> String {
+        self.as_message().to_string()
     }
 }
 
-impl std::fmt::Display for JsonResponseErrorCode {
-    fn fmt(
-        &self,
-        f: &mut std::fmt::Formatter<'_>,
-    ) -> std::fmt::Result {
-        write!(f, "{}", self.as_str())
+impl Default for ResponseError {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -92,7 +93,7 @@ impl JsonResponseErrorBuilder {
     pub fn new() -> Self {
         Self {
             error: JsonResponseError {
-                code: JsonResponseErrorCode::new().to_string(),
+                code: ResponseError::new().to_code(),
                 path: Vec::new(),
                 message: None,
             },
@@ -209,7 +210,7 @@ impl JsonResponseError {
     /// ```
     pub fn new() -> Self {
         Self {
-            code: JsonResponseErrorCode::new().to_string(),
+            code: ResponseError::new().to_code(),
             path: Vec::new(),
             message: None,
         }

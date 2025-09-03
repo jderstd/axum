@@ -1,11 +1,15 @@
 ## 0.8.0
 
+### Breaking Changes
+
+- Rename `JsonResponseErrorCode` to `ResponseError`
+
 ### What's New
 
-- Add `new` functions for `JsonResponseErrorCode`
-- Add `Default` derive for `JsonResponseErrorCode`
 - Add `new` functions for `JsonResponseError`
 - Add `Default` derive for `JsonResponseError`
+- Add `new` functions for `ResponseError`
+- Add `Default` derive for `ResponseError`
 
 ### What's Changes
 

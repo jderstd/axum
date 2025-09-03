@@ -10,9 +10,7 @@ use http::{StatusCode, request::Parts};
 
 use crate::response::{
     Response,
-    json::{
-        CreateJsonResponse, JsonResponseError, error::JsonResponseErrorCode,
-    },
+    json::{CreateJsonResponse, JsonResponseError, error::ResponseError},
 };
 
 /// Extractor and response that works with typed header values from [`headers`].
@@ -71,7 +69,7 @@ where
                 .status(StatusCode::BAD_REQUEST)
                 .error(
                     JsonResponseError::builder()
-                        .code(JsonResponseErrorCode::Parse.as_str())
+                        .code(ResponseError::Parse.as_code())
                         .path([rej.name().as_str()])
                         .message(format!("{:?}", rej.reason()))
                         .build(),
@@ -103,7 +101,7 @@ where
                 .status(StatusCode::BAD_REQUEST)
                 .error(
                     JsonResponseError::builder()
-                        .code(JsonResponseErrorCode::Parse.as_str())
+                        .code(ResponseError::Parse.as_code())
                         .path([rej.name().as_str()])
                         .message(format!("{:?}", rej.reason()))
                         .build()

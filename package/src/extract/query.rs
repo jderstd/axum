@@ -8,9 +8,7 @@ use serde::{
 
 use crate::response::{
     Response,
-    json::{
-        CreateJsonResponse, JsonResponseError, error::JsonResponseErrorCode,
-    },
+    json::{CreateJsonResponse, JsonResponseError, error::ResponseError},
 };
 
 /// Deserializes empty query parameters as `None` instead of empty strings.
@@ -104,7 +102,7 @@ where
                 .status(rej.status())
                 .error(
                     JsonResponseError::builder()
-                        .code(JsonResponseErrorCode::Parse.as_str())
+                        .code(ResponseError::Parse.as_code())
                         .message(rej.body_text())
                         .build(),
                 )

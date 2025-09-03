@@ -6,9 +6,7 @@ use http::{StatusCode, request::Parts};
 
 use crate::response::{
     Response,
-    json::{
-        CreateJsonResponse, JsonResponseError, error::JsonResponseErrorCode,
-    },
+    json::{CreateJsonResponse, JsonResponseError, error::ResponseError},
 };
 
 /// Access the path in the router that matches the request.
@@ -62,7 +60,7 @@ where
                 .status(rej.status())
                 .error(
                     JsonResponseError::builder()
-                        .code(JsonResponseErrorCode::Parse.as_str())
+                        .code(ResponseError::Parse.as_code())
                         .message(rej.body_text())
                         .build(),
                 )
@@ -89,14 +87,14 @@ where
             | Ok(Some(val)) => Ok(Some(Self(val.as_str().into()))),
             | Ok(None) => Ok(None),
             | Err(_) => {
-                let code: JsonResponseErrorCode = JsonResponseErrorCode::Server;
+                let rer: ResponseError = ResponseError::Server;
 
                 Err(CreateJsonResponse::failure()
                     .status(StatusCode::INTERNAL_SERVER_ERROR)
                     .error(
                         JsonResponseError::builder()
-                            .code(code.as_str())
-                            .message(code.as_message())
+                            .code(rer.as_code())
+                            .message(rer.as_message())
                             .build(),
                     )
                     .send())

@@ -6,9 +6,7 @@ use http::request::Parts;
 
 use crate::response::{
     Response,
-    json::{
-        CreateJsonResponse, JsonResponseError, error::JsonResponseErrorCode,
-    },
+    json::{CreateJsonResponse, JsonResponseError, error::ResponseError},
 };
 
 /// Access the path the matched the route is nested at.
@@ -61,7 +59,7 @@ where
                 .status(rej.status())
                 .error(
                     JsonResponseError::builder()
-                        .code(JsonResponseErrorCode::Parse.as_str())
+                        .code(ResponseError::Parse.as_code())
                         .message(rej.body_text())
                         .build(),
                 )

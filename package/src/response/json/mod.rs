@@ -10,5 +10,5 @@ pub use crate::response::json::success::JsonSuccessResponseFunctions;
 pub use crate::response::json::failure::JsonFailureResponseFunctions;
 
 pub use crate::response::json::error::{
-    JsonResponseError, JsonResponseErrorBuilder, JsonResponseErrorCode,
+    JsonResponseError, JsonResponseErrorBuilder, ResponseError,
 };

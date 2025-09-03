@@ -8,7 +8,7 @@ use serde::{Serialize, de::DeserializeOwned};
 
 use crate::response::{
     CreateResponse, Response,
-    json::{CreateJsonResponse, JsonResponseError, JsonResponseErrorCode},
+    json::{CreateJsonResponse, JsonResponseError, ResponseError},
 };
 
 /// URL encoded extractor and response.
@@ -75,7 +75,7 @@ where
                 .status(rej.status())
                 .error(
                     JsonResponseError::builder()
-                        .code(JsonResponseErrorCode::Parse.as_str())
+                        .code(ResponseError::Parse.as_code())
                         .message(rej.body_text())
                         .build(),
                 )
@@ -100,7 +100,7 @@ where
                 .status(StatusCode::INTERNAL_SERVER_ERROR)
                 .error(
                     JsonResponseError::builder()
-                        .code(JsonResponseErrorCode::Server.as_str())
+                        .code(ResponseError::Server.as_code())
                         .message(err.to_string())
                         .build(),
                 )

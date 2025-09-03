@@ -6,7 +6,7 @@ use tower_service::Service;
 
 use crate::response::{
     Response as Res,
-    json::{CreateJsonResponse, JsonResponseError, JsonResponseErrorCode},
+    json::{CreateJsonResponse, JsonResponseError, ResponseError},
 };
 
 /// Default maximum time in seconds.
@@ -51,15 +51,14 @@ where
             match tokio::time::timeout(limit, fut).await {
                 | Ok(res) => res,
                 | Err(_) => {
-                    let code: JsonResponseErrorCode =
-                        JsonResponseErrorCode::Timeout;
+                    let rer: ResponseError = ResponseError::Timeout;
 
                     let res: Res = CreateJsonResponse::failure()
                         .status(StatusCode::REQUEST_TIMEOUT)
                         .error(
                             JsonResponseError::builder()
-                                .code(code.as_str())
-                                .message(code.as_message())
+                                .code(rer.as_code())
+                                .message(rer.as_message())
                                 .build(),
                         )
                         .send();

@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod test {
     use axum_test::TestServer;
-    use jder_axum::response::json::{JsonResponse, JsonResponseErrorCode};
+    use jder_axum::response::json::{JsonResponse, ResponseError};
 
     use crate::router::create_server;
     use crate::router::query::RouteQueryResponseData;
@@ -98,9 +98,6 @@ mod test {
             server.post("/query?num=1A").await.json::<JsonResponse>();
 
         assert_eq!(res.success, false);
-        assert_eq!(
-            res.errors[0].code,
-            JsonResponseErrorCode::Parse.to_string()
-        );
+        assert_eq!(res.errors[0].code, ResponseError::Parse.as_code());
     }
 }

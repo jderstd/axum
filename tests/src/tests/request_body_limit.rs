@@ -2,7 +2,7 @@
 mod test {
     use axum_test::TestServer;
     use jder_axum::response::json::{
-        JsonResponse, JsonResponseError, JsonResponseErrorCode,
+        JsonResponse, JsonResponseError, ResponseError,
     };
 
     use crate::router::create_server;
@@ -37,7 +37,7 @@ mod test {
 
         let err: JsonResponseError = res.errors[0].clone();
 
-        assert_eq!(err.code, JsonResponseErrorCode::TooLarge.as_str());
+        assert_eq!(err.code, ResponseError::TooLarge.as_code());
     }
 
     #[tokio::test]
@@ -71,6 +71,6 @@ mod test {
 
         let err: JsonResponseError = res.errors[0].clone();
 
-        assert_eq!(err.code, JsonResponseErrorCode::TooLarge.as_str());
+        assert_eq!(err.code, ResponseError::TooLarge.as_code());
     }
 }

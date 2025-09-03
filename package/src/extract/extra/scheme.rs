@@ -4,9 +4,7 @@ use http::request::Parts;
 
 use crate::response::{
     Response,
-    json::{
-        CreateJsonResponse, JsonResponseError, error::JsonResponseErrorCode,
-    },
+    json::{CreateJsonResponse, JsonResponseError, error::ResponseError},
 };
 
 /// Extractor that resolves the scheme / protocol of a request.
@@ -49,7 +47,7 @@ where
                 .status(rej.status())
                 .error(
                     JsonResponseError::builder()
-                        .code(JsonResponseErrorCode::Parse.as_str())
+                        .code(ResponseError::Parse.as_code())
                         .message(rej.body_text())
                         .build(),
                 )

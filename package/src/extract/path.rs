@@ -5,7 +5,7 @@ use serde::de::DeserializeOwned;
 
 use crate::response::{
     Response,
-    json::{CreateJsonResponse, JsonResponseError, JsonResponseErrorCode},
+    json::{CreateJsonResponse, JsonResponseError, ResponseError},
 };
 
 /// Extractor that parses path parameters.
@@ -50,7 +50,7 @@ where
                 .status(rej.status())
                 .error(
                     JsonResponseError::builder()
-                        .code(JsonResponseErrorCode::Parse.as_str())
+                        .code(ResponseError::Parse.as_code())
                         .message(rej.body_text())
                         .build(),
                 )
@@ -81,7 +81,7 @@ where
                 .status(rej.status())
                 .error(
                     JsonResponseError::builder()
-                        .code(JsonResponseErrorCode::Parse.as_str())
+                        .code(ResponseError::Parse.as_code())
                         .message(rej.body_text())
                         .build(),
                 )
