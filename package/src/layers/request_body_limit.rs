@@ -67,12 +67,16 @@ where
                 | Err(err)
                     if err.downcast_ref::<LengthLimitError>().is_some() =>
                 {
+                    let code: JsonResponseErrorCode =
+                        JsonResponseErrorCode::TooLarge;
+
                     let res: Res = CreateJsonResponse::failure()
                         .status(StatusCode::PAYLOAD_TOO_LARGE)
                         .error(
                             JsonResponseError::builder()
-                                .code(JsonResponseErrorCode::TooLarge.as_str())
+                                .code(code.as_str())
                                 .path(["request", "body"])
+                                .message(code.as_message())
                                 .build(),
                         )
                         .send();
@@ -80,12 +84,16 @@ where
                     Ok(res)
                 },
                 | Err(_) => {
+                    let code: JsonResponseErrorCode =
+                        JsonResponseErrorCode::Parse;
+
                     let res: Res = CreateJsonResponse::failure()
                         .status(StatusCode::BAD_REQUEST)
                         .error(
                             JsonResponseError::builder()
-                                .code(JsonResponseErrorCode::Parse.as_str())
+                                .code(code.as_str())
                                 .path(["request", "body"])
+                                .message(code.as_message())
                                 .build(),
                         )
                         .send();
@@ -112,7 +120,8 @@ where
 ///             "path": [
 ///                 "request",
 ///                 "body"
-///             ]
+///             ],
+///             "message": "Request body is too large"
 ///         }
 ///     ]
 /// }

@@ -88,14 +88,19 @@ where
         {
             | Ok(Some(val)) => Ok(Some(Self(val.as_str().into()))),
             | Ok(None) => Ok(None),
-            | Err(_) => Err(CreateJsonResponse::failure()
-                .status(StatusCode::INTERNAL_SERVER_ERROR)
-                .error(
-                    JsonResponseError::builder()
-                        .code(JsonResponseErrorCode::Server.as_str())
-                        .build(),
-                )
-                .send()),
+            | Err(_) => {
+                let code: JsonResponseErrorCode = JsonResponseErrorCode::Server;
+
+                Err(CreateJsonResponse::failure()
+                    .status(StatusCode::INTERNAL_SERVER_ERROR)
+                    .error(
+                        JsonResponseError::builder()
+                            .code(code.as_str())
+                            .message(code.as_message())
+                            .build(),
+                    )
+                    .send())
+            },
         }
     }
 }

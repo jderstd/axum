@@ -51,11 +51,15 @@ where
             match tokio::time::timeout(limit, fut).await {
                 | Ok(res) => res,
                 | Err(_) => {
+                    let code: JsonResponseErrorCode =
+                        JsonResponseErrorCode::Timeout;
+
                     let res: Res = CreateJsonResponse::failure()
                         .status(StatusCode::REQUEST_TIMEOUT)
                         .error(
                             JsonResponseError::builder()
-                                .code(JsonResponseErrorCode::Timeout.as_str())
+                                .code(code.as_str())
+                                .message(code.as_message())
                                 .build(),
                         )
                         .send();
@@ -78,7 +82,8 @@ where
 ///     "data": null,
 ///     "errors": [
 ///         {
-///             "code": "timeout"
+///             "code": "timeout",
+///             "message" : "Request timeout"
 ///         }
 ///     ]
 /// }

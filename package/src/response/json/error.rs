@@ -31,6 +31,17 @@ impl JsonResponseErrorCode {
             | Self::Unknown => "unknown",
         }
     }
+
+    /// Get the error message for the error code.
+    pub fn as_message(&self) -> &str {
+        match self {
+            | Self::Parse => "Failed to parse the request",
+            | Self::TooLarge => "Request body is too large",
+            | Self::Timeout => "Request timeout",
+            | Self::Server => "Internal server error",
+            | Self::Unknown => "Unknown error",
+        }
+    }
 }
 
 impl Default for JsonResponseErrorCode {
