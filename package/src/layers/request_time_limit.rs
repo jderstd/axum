@@ -54,7 +54,7 @@ where
                     let rer: ResponseError = ResponseError::Timeout;
 
                     let res: Res = CreateJsonResponse::failure()
-                        .status(StatusCode::REQUEST_TIMEOUT)
+                        .status(StatusCode::GATEWAY_TIMEOUT)
                         .error(
                             JsonResponseError::builder()
                                 .code(rer.as_code())
@@ -75,14 +75,14 @@ where
 /// Following error will be returned if the request time exceeds the limit:
 ///
 /// ```jsonc
-/// // Status: 408
+/// // Status: 504
 /// {
 ///     "success": false,
 ///     "data": null,
 ///     "errors": [
 ///         {
 ///             "code": "timeout",
-///             "message" : "Request timeout"
+///             "message" : "Gateway timeout"
 ///         }
 ///     ]
 /// }

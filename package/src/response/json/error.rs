@@ -42,7 +42,7 @@ impl ResponseError {
         match self {
             | Self::Parse => "Failed to parse the request",
             | Self::TooLarge => "Request body is too large",
-            | Self::Timeout => "Request timeout",
+            | Self::Timeout => "Gateway timeout",
             | Self::Server => "Internal server error",
             | Self::Unknown => "Unknown error",
         }
