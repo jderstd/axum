@@ -5,7 +5,7 @@ publish = false
 
 [dependencies]
 axum = { workspace = true }
-axum-test = "^17.2.0"
+axum-test = { workspace = true }
 axum_typed_multipart = { workspace = true }
 headers = { workspace = true }
 jder_axum = { workspace = true }

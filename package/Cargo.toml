@@ -37,21 +37,21 @@ path = "src/lib.rs"
 
 [dependencies]
 axum = { workspace = true }
-axum-core = "~0.5.2"
-axum-extra ={ version = "~0.10.1", optional = true }
+axum-core = { workspace = true }
+axum-extra = { workspace = true, optional = true }
 axum_typed_multipart = { workspace = true, optional = true }
-bytes = { version = "^1.0.0", optional = true }
+bytes = { workspace = true, optional = true }
 headers = { workspace = true, optional = true }
-http = "^1.0.0"
-http-body = { version = "^1.0.0", optional = true }
-http-body-util = { version = "~0.1.0", optional = true }
+http = { workspace = true }
+http-body = { workspace = true, optional = true }
+http-body-util = { workspace = true, optional = true }
 serde = { workspace = true }
-serde_json = "^1.0.0"
-serde_urlencoded = { version = "~0.7.0", optional = true }
+serde_json = { workspace = true }
+serde_urlencoded = { workspace = true, optional = true }
 tokio = { workspace = true, optional = true }
-tower-layer = { version = "~0.3.0", optional = true }
-tower-service = { version = "~0.3.0", optional = true }
-utoipa = { version = "^5.0.0", optional = true }
+tower-layer = { workspace = true, optional = true }
+tower-service = { workspace = true, optional = true }
+utoipa = { workspace = true, optional = true }
 
 [features]
 default = [

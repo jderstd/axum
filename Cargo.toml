@@ -6,9 +6,27 @@ members = [
 ]
 
 [workspace.dependencies]
-axum = { version = "~0.8.3", default-features = false, features = ["macros"] }
-axum_typed_multipart =  "~0.16.0"
-headers = "~0.4.0"
+
+# workspace
 jder_axum = { path = "./package", features = ["all"] }
-serde = { version = "^1", features = ["derive"] }
-tokio = "^1.40.0"
+
+# package
+axum = { version = "~0.8.3", default-features = false, features = ["macros"] }
+axum-core = { version = "~0.5.2" }
+axum-extra = { version = "~0.10.1" }
+axum_typed_multipart =  { version = "~0.16.0" }
+bytes = { version = "^1.0.0" }
+headers = { version = "^0.4.0" }
+http = { version = "^1.0.0" }
+http-body = { version = "^1.0.0" }
+http-body-util = { version = "~0.1.0" }
+serde = { version = "^1.0.0", features = ["derive"] }
+serde_json = { version = "^1.0.0" }
+serde_urlencoded = { version = "~0.7.0" }
+tokio = { version = "^1.40.0" }
+tower-layer = { version = "~0.3.0" }
+tower-service = { version = "~0.3.0" }
+utoipa = { version = "^5.0.0" }
+
+# tests
+axum-test = { version = "^17.2.0" }
