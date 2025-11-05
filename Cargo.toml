@@ -13,7 +13,7 @@ jder_axum = { path = "./package", features = ["all"] }
 # package
 axum = { version = "~0.8.3", default-features = false, features = ["macros"] }
 axum-core = { version = "~0.5.2" }
-axum-extra = { version = "~0.10.1" }
+axum-extra = { version = "~0.12.1" }
 axum_typed_multipart =  { version = "~0.16.0" }
 bytes = { version = "^1.0.0" }
 headers = { version = "^0.4.0" }
