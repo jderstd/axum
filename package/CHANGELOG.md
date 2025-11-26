@@ -1,3 +1,9 @@
+## 0.9.1 (2025-11-26)
+
+### What's Changed
+
+- Update `axum-extra` supported version from `~0.10.1` to `~0.12.0`
+
 ## 0.9.0 (2025-09-20)
 
 ### Breaking Changes
