@@ -6,6 +6,8 @@ updates:
           interval: "daily"
           time: "00:00"
           timezone: "Etc/UTC"
+      commit-message:
+          prefix: "chore"
       ignore:
           - dependency-name: "axum"
             update-types:
