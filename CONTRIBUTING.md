@@ -4,6 +4,8 @@
 
 Thanks for your interest in contributing!
 
+This is a guideline for contributing to JDER axum.
+
 ## Before the Contribution
 
 Please install the following dependencies:
@@ -61,7 +63,7 @@ just clean
 
 ## Committing
 
-Use a short prefix describing the change in the commit message. For example:
+When committing changes to the code, use the following prefixes:
 
 - `chore`: updates in dependencies/tools
 - `build`: changes to the build system
@@ -75,3 +77,10 @@ Use a short prefix describing the change in the commit message. For example:
 - `docs`: documentation only changes
 - `ci`: CI configuration updates
 - `release`: new version release
+
+For example:
+
+```
+feat: add xxx feature
+docs: fix typos
+```
