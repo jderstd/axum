@@ -48,6 +48,10 @@ A compatibility list of `axum` and `jder_axum`:
 | ~0.7.9         | 0.3.1               |
 | ~0.7.7         | 0.1.0 - 0.3.0       |
 
+## Contributing
+
+For contributing, please refer to [CONTRIBUTING.md](./CONTRIBUTING.md).
+
 ## License
 
 This project is licensed under the terms of the MIT license.
