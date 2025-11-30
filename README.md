@@ -50,7 +50,7 @@ A compatibility list of `axum` and `jder_axum`:
 
 ## Contributing
 
-For contributing, please refer to [CONTRIBUTING.md](./CONTRIBUTING.md).
+For contributing, please refer to the [contributing guide](./CONTRIBUTING.md).
 
 ## License
 
