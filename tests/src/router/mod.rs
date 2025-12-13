@@ -40,7 +40,7 @@ use crate::router::typed_header::{
 };
 
 pub async fn route_index() -> Response {
-    CreateJsonResponse::dataless().send()
+    CreateJsonResponse::dataless().create()
 }
 
 /// Create router for the app

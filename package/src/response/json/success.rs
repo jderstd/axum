@@ -28,7 +28,7 @@ impl<D: Serialize> JsonSuccessResponseFunctions<D> {
     /// async fn route() -> Response {
     ///     CreateJsonResponse::dataless()
     ///         .status(StatusCode::CREATED)
-    ///         .send()
+    ///         .create()
     /// }
     /// ```
     pub fn status<S: Into<StatusCode>>(
@@ -54,7 +54,7 @@ impl<D: Serialize> JsonSuccessResponseFunctions<D> {
     /// async fn route() -> Response {
     ///     CreateJsonResponse::dataless()
     ///         .version(Version::HTTP_3)
-    ///         .send()
+    ///         .create()
     /// }
     /// ```
     pub fn version<V: Into<Version>>(
@@ -89,7 +89,7 @@ impl<D: Serialize> JsonSuccessResponseFunctions<D> {
     ///             header::CONTENT_TYPE,
     ///             "application/json"
     ///         )
-    ///         .send()
+    ///         .create()
     /// }
     /// ```
     pub fn header<K, V>(
@@ -156,7 +156,7 @@ impl<D: Serialize> JsonSuccessResponseFunctions<D> {
     ///
     ///     CreateJsonResponse::dataless()
     ///         .headers(headers)
-    ///         .send()
+    ///         .create()
     /// }
     /// ```
     pub fn headers<K, V>(
@@ -176,7 +176,25 @@ impl<D: Serialize> JsonSuccessResponseFunctions<D> {
         self
     }
 
-    /// Send the response.
+    /// Finish the response creation.
+    ///
+    /// ## Example
+    ///
+    /// ```no_run
+    /// use jder_axum::response::{
+    ///     Response,
+    ///     json::CreateJsonResponse,
+    /// };
+    ///
+    /// async fn route() -> Response {
+    ///     CreateJsonResponse::dataless().create()
+    /// }
+    /// ```
+    pub fn create(self) -> Response {
+        create_json_response_send(self.state)
+    }
+
+    /// Finish the response creation.
     ///
     /// ## Example
     ///
@@ -190,8 +208,9 @@ impl<D: Serialize> JsonSuccessResponseFunctions<D> {
     ///     CreateJsonResponse::dataless().send()
     /// }
     /// ```
+    #[deprecated = "Use `create` instead"]
     pub fn send(self) -> Response {
-        create_json_response_send(self.state)
+        self.create()
     }
 }
 
@@ -215,7 +234,7 @@ impl<D> JsonSuccessResponseFunctions<D> {
     /// async fn route() -> Response {
     ///     CreateJsonResponse::success::<ResponseData>()
     ///         .data(ResponseData { name: "Name".to_string() })
-    ///         .send()
+    ///         .create()
     /// }
     /// ```
     pub fn data(

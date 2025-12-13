@@ -15,7 +15,7 @@ use jder_axum::response::{
 };
 
 async fn route() -> Response {
-    CreateJsonResponse::dataless().send()
+    CreateJsonResponse::dataless().create()
 }
 ```
 

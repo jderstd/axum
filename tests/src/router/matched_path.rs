@@ -12,5 +12,5 @@ pub struct RouteMatchedPathResponseData {
 pub async fn route_matched_path(path: MatchedPath) -> Response {
     CreateJsonResponse::success::<RouteMatchedPathResponseData>()
         .data(RouteMatchedPathResponseData { path: path.as_str().to_string() })
-        .send()
+        .create()
 }

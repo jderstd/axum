@@ -9,8 +9,8 @@ pub async fn route_typed_header_optional(
     data: Option<TypedHeader<UserAgent>>
 ) -> Response {
     if let Some(TypedHeader(data)) = data {
-        CreateJsonResponse::success().data(data.to_string()).send()
+        CreateJsonResponse::success().data(data.to_string()).create()
     } else {
-        CreateJsonResponse::dataless().send()
+        CreateJsonResponse::dataless().create()
     }
 }

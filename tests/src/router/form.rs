@@ -14,5 +14,5 @@ pub struct RouteFormResponseData {
 pub async fn route_form(Form(data): Form<RouteFormResponseData>) -> Response {
     CreateJsonResponse::success::<RouteFormResponseData>()
         .data(RouteFormResponseData { id: data.id, name: data.name })
-        .send()
+        .create()
 }

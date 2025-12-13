@@ -30,7 +30,7 @@
 //!         .data(RouteResponseData {
 //!             title: "Title".to_string(),
 //!         })
-//!         .send()
+//!         .create()
 //! }
 //! ```
 //!
@@ -45,7 +45,7 @@
 //! };
 //!
 //! async fn route() -> Response {
-//!     CreateJsonResponse::dataless().send()
+//!     CreateJsonResponse::dataless().create()
 //! }
 //! ```
 //!

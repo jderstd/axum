@@ -33,5 +33,5 @@ pub async fn route_multipart_file(
         | None => {},
     }
 
-    CreateJsonResponse::failure().status(StatusCode::NOT_FOUND).send()
+    CreateJsonResponse::failure().status(StatusCode::NOT_FOUND).create()
 }

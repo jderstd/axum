@@ -30,7 +30,7 @@ impl<D: Serialize> JsonFailureResponseFunctions<D> {
     /// async fn route() -> Response {
     ///     CreateJsonResponse::failure()
     ///         .status(StatusCode::NOT_FOUND)
-    ///         .send()
+    ///         .create()
     /// }
     /// ```
     pub fn status<S: Into<StatusCode>>(
@@ -56,7 +56,7 @@ impl<D: Serialize> JsonFailureResponseFunctions<D> {
     /// async fn route() -> Response {
     ///     CreateJsonResponse::failure()
     ///         .version(Version::HTTP_3)
-    ///         .send()
+    ///         .create()
     /// }
     /// ```
     pub fn version<V: Into<Version>>(
@@ -91,7 +91,7 @@ impl<D: Serialize> JsonFailureResponseFunctions<D> {
     ///             header::CONTENT_TYPE,
     ///             "application/json"
     ///         )
-    ///         .send()
+    ///         .create()
     /// }
     /// ```
     pub fn header<K, V>(
@@ -158,7 +158,7 @@ impl<D: Serialize> JsonFailureResponseFunctions<D> {
     ///
     ///     CreateJsonResponse::dataless()
     ///         .headers(headers)
-    ///         .send()
+    ///         .create()
     /// }
     /// ```
     pub fn headers<K, V>(
@@ -178,7 +178,25 @@ impl<D: Serialize> JsonFailureResponseFunctions<D> {
         self
     }
 
-    /// Send the response.
+    /// Finish the response creation.
+    ///
+    /// ## Example
+    ///
+    /// ```no_run
+    /// use jder_axum::response::{
+    ///     Response,
+    ///     json::CreateJsonResponse,
+    /// };
+    ///
+    /// async fn route() -> Response {
+    ///     CreateJsonResponse::failure().create()
+    /// }
+    /// ```
+    pub fn create(self) -> Response {
+        create_json_response_send(self.state)
+    }
+
+    /// Finish the response creation.
     ///
     /// ## Example
     ///
@@ -192,8 +210,9 @@ impl<D: Serialize> JsonFailureResponseFunctions<D> {
     ///     CreateJsonResponse::failure().send()
     /// }
     /// ```
+    #[deprecated = "Use `create` instead"]
     pub fn send(self) -> Response {
-        create_json_response_send(self.state)
+        self.create()
     }
 }
 
@@ -220,7 +239,7 @@ impl<D: Serialize> JsonFailureResponseFunctions<D> {
     ///
     ///     CreateJsonResponse::failure()
     ///         .error(error)
-    ///         .send()
+    ///         .create()
     /// }
     /// ```
     pub fn error(
@@ -263,7 +282,7 @@ impl<D: Serialize> JsonFailureResponseFunctions<D> {
     ///             error_title,
     ///             error_num,
     ///         ])
-    ///         .send()
+    ///         .create()
     /// }
     /// ```
     pub fn errors<V, E>(

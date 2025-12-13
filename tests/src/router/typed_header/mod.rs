@@ -10,5 +10,5 @@ use jder_axum::{
 pub async fn route_typed_header(
     TypedHeader(data): TypedHeader<UserAgent>
 ) -> Response {
-    CreateJsonResponse::success().data(data.to_string()).send()
+    CreateJsonResponse::success().data(data.to_string()).create()
 }

@@ -132,7 +132,7 @@ pub(crate) fn create_json_response_send<D: Serialize>(
 /// };
 ///
 /// async fn route() -> Response {
-///     CreateJsonResponse::dataless().send()
+///     CreateJsonResponse::dataless().create()
 /// }
 /// ```
 ///
@@ -153,7 +153,7 @@ pub(crate) fn create_json_response_send<D: Serialize>(
 /// async fn route() -> Response {
 ///     CreateJsonResponse::success::<ResponseData>()
 ///         .data(ResponseData { name: "Name".to_string() })
-///         .send()
+///         .create()
 /// }
 /// ```
 ///
@@ -166,7 +166,7 @@ pub(crate) fn create_json_response_send<D: Serialize>(
 /// };
 ///
 /// async fn route() -> Response {
-///     CreateJsonResponse::failure().send()
+///     CreateJsonResponse::failure().create()
 /// }
 /// ```
 #[derive(Debug, Clone, Copy, Default)]
@@ -184,7 +184,7 @@ impl CreateJsonResponse {
     /// };
     ///
     /// async fn route() -> Response {
-    ///     CreateJsonResponse::dataless().send()
+    ///     CreateJsonResponse::dataless().create()
     /// }
     /// ```
     pub fn dataless() -> JsonSuccessResponseFunctions<()> {
@@ -220,7 +220,7 @@ impl CreateJsonResponse {
     /// async fn route() -> Response {
     ///     CreateJsonResponse::success::<ResponseData>()
     ///         .data(ResponseData { name: "Name".to_string() })
-    ///         .send()
+    ///         .create()
     /// }
     /// ```
     pub fn success<D>() -> JsonSuccessResponseFunctions<D> {
@@ -248,7 +248,7 @@ impl CreateJsonResponse {
     /// };
     ///
     /// async fn route() -> Response {
-    ///     CreateJsonResponse::failure().send()
+    ///     CreateJsonResponse::failure().create()
     /// }
     /// ```
     pub fn failure() -> JsonFailureResponseFunctions<()> {

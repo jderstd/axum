@@ -1,3 +1,27 @@
+## 0.10.0
+
+### Breaking Changes
+
+- Deprecate `send` function in response creation
+
+### What's New
+
+- Add `create` function for response creation
+
+### Migrating from 0.9.X to 0.10.0
+
+```diff
+use jder_axum::response::{
+    Response,
+    json::CreateJsonResponse,
+};
+
+async fn route() -> Response {
+-    CreateJsonResponse::dataless().send()
++    CreateJsonResponse::dataless().create()
+}
+```
+
 ## 0.9.1 (2025-11-26)
 
 ### What's Changed

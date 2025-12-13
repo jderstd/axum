@@ -54,7 +54,7 @@ where
                         .message(rej.body_text())
                         .build(),
                 )
-                .send()),
+                .create()),
         }
     }
 }
@@ -85,7 +85,7 @@ where
                         .message(rej.body_text())
                         .build(),
                 )
-                .send()),
+                .create()),
         }
     }
 }

@@ -17,10 +17,10 @@ pub async fn route_json_optional(
     if let Some(Json(data)) = data {
         CreateJsonResponse::success::<RouteJsonResponseData>()
             .data(RouteJsonResponseData { id: data.id, name: data.name })
-            .send()
+            .create()
     } else {
         CreateJsonResponse::success::<RouteJsonResponseData>()
             .data(RouteJsonResponseData { id: None, name: None })
-            .send()
+            .create()
     }
 }

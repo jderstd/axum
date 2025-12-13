@@ -79,7 +79,7 @@ where
                         .message(rej.body_text())
                         .build(),
                 )
-                .send()),
+                .create()),
         }
     }
 }
@@ -104,7 +104,7 @@ where
                         .message(err.to_string())
                         .build(),
                 )
-                .send(),
+                .create(),
         }
     }
 }

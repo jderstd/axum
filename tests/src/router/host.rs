@@ -12,5 +12,5 @@ pub struct RouteHostResponseData {
 pub async fn route_host(Host(host): Host) -> Response {
     CreateJsonResponse::success::<RouteHostResponseData>()
         .data(RouteHostResponseData { host })
-        .send()
+        .create()
 }

@@ -7,12 +7,12 @@ use jder_axum::{
 };
 
 async fn route_ok() -> Response {
-    CreateJsonResponse::dataless().send()
+    CreateJsonResponse::dataless().create()
 }
 
 async fn route_timeout() -> Response {
     tokio::time::sleep(Duration::from_secs(2)).await;
-    CreateJsonResponse::dataless().send()
+    CreateJsonResponse::dataless().create()
 }
 
 pub fn router_request_time_limit() -> Router {

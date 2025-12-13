@@ -15,5 +15,5 @@ pub async fn route_path(Path((id, name)): Path<(usize, String)>) -> Response {
     CreateJsonResponse::success::<RoutePathResponseData>()
         .status(StatusCode::CREATED)
         .data(RoutePathResponseData { id, name })
-        .send()
+        .create()
 }

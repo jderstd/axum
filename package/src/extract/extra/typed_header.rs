@@ -74,7 +74,7 @@ where
                         .message(format!("{:?}", rej.reason()))
                         .build(),
                 )
-                .send()),
+                .create()),
         }
     }
 }
@@ -106,7 +106,7 @@ where
                         .message(format!("{:?}", rej.reason()))
                         .build()
                 )
-                .send()),
+                .create()),
         }
     }
 }

@@ -27,5 +27,5 @@ pub async fn route_multipart(
             string: data.string.clone(),
             number: data.number,
         })
-        .send()
+        .create()
 }

@@ -12,5 +12,5 @@ pub struct RouteNestedPathResponseData {
 pub async fn route_nested_path(path: NestedPath) -> Response {
     CreateJsonResponse::success::<RouteNestedPathResponseData>()
         .data(RouteNestedPathResponseData { path: path.as_str().to_string() })
-        .send()
+        .create()
 }

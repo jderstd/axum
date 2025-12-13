@@ -16,5 +16,5 @@ pub async fn route_connect_info(
 ) -> Response {
     CreateJsonResponse::success::<RouteConnectInfoResponseData>()
         .data(RouteConnectInfoResponseData { addr: addr.ip().to_string() })
-        .send()
+        .create()
 }

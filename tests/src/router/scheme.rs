@@ -12,5 +12,5 @@ pub struct RouteSchemeResponseData {
 pub async fn route_scheme(Scheme(scheme): Scheme) -> Response {
     CreateJsonResponse::success::<RouteSchemeResponseData>()
         .data(RouteSchemeResponseData { scheme })
-        .send()
+        .create()
 }

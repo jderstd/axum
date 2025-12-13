@@ -5,7 +5,7 @@ use jder_axum::{
 };
 
 async fn route_root() -> Response {
-    CreateJsonResponse::dataless().send()
+    CreateJsonResponse::dataless().create()
 }
 
 pub fn router_request_body_limit() -> Router {

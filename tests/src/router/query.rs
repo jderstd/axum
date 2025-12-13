@@ -27,5 +27,5 @@ pub async fn route_query(Query(query): Query<RouteQueryData>) -> Response {
             empty: query.empty,
             none: query.none,
         })
-        .send()
+        .create()
 }
