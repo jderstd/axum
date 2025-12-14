@@ -53,11 +53,10 @@ pub(crate) fn create_json_response_send<D: Serialize>(
             success: false,
             data: None,
             errors: vec![
-                JsonResponseError::builder()
+                JsonResponseError::new()
                     .code(ResponseError::Parse.to_code())
                     .path(["response", "header_map"])
-                    .message("Failed to create header map.".to_string())
-                    .build(),
+                    .message("Failed to create header map."),
             ],
         };
 

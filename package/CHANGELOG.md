@@ -3,12 +3,16 @@
 ### Breaking Changes
 
 - Deprecate `send` function in response creation
+- Remove `JsonResponseErrorBuilder` struct
+- Deprecate `builder`, `build` function in `JsonResponseError`
 
 ### What's New
 
 - Add `create` function for response creation
 
 ### Migrating from 0.9.X to 0.10.0
+
+For creating the JSON response:
 
 ```diff
 use jder_axum::response::{
@@ -20,6 +24,22 @@ async fn route() -> Response {
 -    CreateJsonResponse::dataless().send()
 +    CreateJsonResponse::dataless().create()
 }
+```
+
+For creating the JSON response error:
+
+```diff
+use jder_axum::response::json::{
+    JsonResponseError,
+}
+
+- let error: JsonResponseError = JsonResponseError::builder()
++ let error: JsonResponseError = JsonResponseError::new()
+    .code("parse")
+    .path(["json", "title"])
+-   .message("Invalid title")
+-   .build();
++   .message("Invalid title");
 ```
 
 ## 0.9.1 (2025-11-26)

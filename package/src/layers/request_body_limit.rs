@@ -72,11 +72,10 @@ where
                     let res: Res = CreateJsonResponse::failure()
                         .status(StatusCode::PAYLOAD_TOO_LARGE)
                         .error(
-                            JsonResponseError::builder()
+                            JsonResponseError::new()
                                 .code(rer.as_code())
                                 .path(["request", "body"])
-                                .message(rer.as_message())
-                                .build(),
+                                .message(rer.as_message()),
                         )
                         .create();
 
@@ -88,11 +87,10 @@ where
                     let res: Res = CreateJsonResponse::failure()
                         .status(StatusCode::BAD_REQUEST)
                         .error(
-                            JsonResponseError::builder()
+                            JsonResponseError::new()
                                 .code(rer.as_code())
                                 .path(["request", "body"])
-                                .message(rer.as_message())
-                                .build(),
+                                .message(rer.as_message()),
                         )
                         .create();
 

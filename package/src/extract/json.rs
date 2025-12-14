@@ -75,10 +75,9 @@ where
             | Err(rej) => Err(CreateJsonResponse::failure()
                 .status(rej.status())
                 .error(
-                    JsonResponseError::builder()
+                    JsonResponseError::new()
                         .code(ResponseError::Parse.as_code())
-                        .message(rej.body_text())
-                        .build(),
+                        .message(rej.body_text()),
                 )
                 .create()),
         }
@@ -104,10 +103,9 @@ where
             | Err(rej) => Err(CreateJsonResponse::failure()
                 .status(rej.status())
                 .error(
-                    JsonResponseError::builder()
+                    JsonResponseError::new()
                         .code(ResponseError::Parse.as_code())
-                        .message(rej.body_text())
-                        .build(),
+                        .message(rej.body_text()),
                 )
                 .create()),
         }
@@ -135,10 +133,9 @@ where
             | Err(rej) => Err(CreateJsonResponse::failure()
                 .status(rej.status())
                 .error(
-                    JsonResponseError::builder()
+                    JsonResponseError::new()
                         .code(ResponseError::Parse.as_code())
-                        .message(rej.body_text())
-                        .build(),
+                        .message(rej.body_text()),
                 )
                 .create()),
         }
@@ -159,10 +156,9 @@ where
             | Err(err) => CreateJsonResponse::failure()
                 .status(StatusCode::INTERNAL_SERVER_ERROR)
                 .error(
-                    JsonResponseError::builder()
+                    JsonResponseError::new()
                         .code(ResponseError::Server.as_code())
-                        .message(err.to_string())
-                        .build(),
+                        .message(err.to_string()),
                 )
                 .create(),
         }

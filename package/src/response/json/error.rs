@@ -62,127 +62,6 @@ impl Default for ResponseError {
 
 pub(crate) const FAILURE_RESPONSE_DEFAULT: &str = "{\"success\":false,\"data\":null,\"errors\":[{\"code\":\"server\",\"path\":[],\"message\":\"Internal server error.\"}]}";
 
-/// A builder to create a JSON response error.
-///
-/// ## Example
-///
-/// ```no_run
-/// use jder_axum::response::json::JsonResponseError;
-///
-/// let error: JsonResponseError = JsonResponseError::builder()
-///     .code("parse")
-///     .path(["json", "title"])
-///     .message("Invalid title")
-///     .build();
-/// ```
-#[derive(Debug, Clone)]
-pub struct JsonResponseErrorBuilder {
-    pub error: JsonResponseError,
-}
-
-impl JsonResponseErrorBuilder {
-    /// Create a new JSON response error builder.
-    ///
-    /// ## Example
-    ///
-    /// ```no_run
-    /// use jder_axum::response::json::JsonResponseError;
-    ///
-    /// let error: JsonResponseError = JsonResponseError::builder().build();
-    /// ```
-    pub fn new() -> Self {
-        Self {
-            error: JsonResponseError {
-                code: ResponseError::new().to_code(),
-                path: Vec::new(),
-                message: None,
-            },
-        }
-    }
-
-    /// Set an error code for the response.
-    ///
-    /// ## Example
-    ///
-    /// ```no_run
-    /// use jder_axum::response::json::JsonResponseError;
-    ///
-    /// let error: JsonResponseError = JsonResponseError::builder()
-    ///     .code("parse")
-    ///     .build();
-    /// ```
-    pub fn code<Code: Into<String>>(
-        mut self,
-        code: Code,
-    ) -> Self {
-        self.error.code = code.into();
-
-        self
-    }
-
-    /// Set an error path for the response.
-    ///
-    /// ## Example
-    ///
-    /// ```no_run
-    /// use jder_axum::response::json::JsonResponseError;
-    ///
-    /// let error: JsonResponseError = JsonResponseError::builder()
-    ///     .path(["json", "title"])
-    ///     .build();
-    /// ```
-    pub fn path<P, S>(
-        mut self,
-        path: P,
-    ) -> Self
-    where
-        P: IntoIterator<Item = S>,
-        S: Into<String>,
-    {
-        self.error.path = path.into_iter().map(|s| s.into()).collect();
-        self
-    }
-
-    /// Set an error message for the response.
-    ///
-    /// ## Example
-    ///
-    /// ```no_run
-    /// use jder_axum::response::json::JsonResponseError;
-    ///
-    /// let error: JsonResponseError = JsonResponseError::builder()
-    ///     .message("Invalid title")
-    ///     .build();
-    /// ```
-    pub fn message<Message: Into<String>>(
-        mut self,
-        message: Message,
-    ) -> Self {
-        self.error.message = Some(message.into());
-
-        self
-    }
-
-    /// Build the JSON response error.
-    ///
-    /// ## Example
-    ///
-    /// ```no_run
-    /// use jder_axum::response::json::JsonResponseError;
-    ///
-    /// let error: JsonResponseError = JsonResponseError::builder().build();
-    /// ```
-    pub fn build(self) -> JsonResponseError {
-        self.error
-    }
-}
-
-impl Default for JsonResponseErrorBuilder {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
 /// JSON response error.
 ///
 /// For API documentation generation with utoipa,
@@ -229,8 +108,83 @@ impl JsonResponseError {
     ///     .message("Invalid title")
     ///     .build();
     /// ```
-    pub fn builder() -> JsonResponseErrorBuilder {
-        JsonResponseErrorBuilder::new()
+    #[deprecated = "Use `new` function instead"]
+    pub fn builder() -> Self {
+        Self::new()
+    }
+
+    /// Set an error code for the response.
+    ///
+    /// ## Example
+    ///
+    /// ```no_run
+    /// use jder_axum::response::json::JsonResponseError;
+    ///
+    /// let error: JsonResponseError = JsonResponseError::new()
+    ///     .code("parse");
+    /// ```
+    pub fn code<Code: Into<String>>(
+        mut self,
+        code: Code,
+    ) -> Self {
+        self.code = code.into();
+
+        self
+    }
+
+    /// Set an error path for the response.
+    ///
+    /// ## Example
+    ///
+    /// ```no_run
+    /// use jder_axum::response::json::JsonResponseError;
+    ///
+    /// let error: JsonResponseError = JsonResponseError::new()
+    ///     .path(["json", "title"]);
+    /// ```
+    pub fn path<P, S>(
+        mut self,
+        path: P,
+    ) -> Self
+    where
+        P: IntoIterator<Item = S>,
+        S: Into<String>,
+    {
+        self.path = path.into_iter().map(|s| s.into()).collect();
+        self
+    }
+
+    /// Set an error message for the response.
+    ///
+    /// ## Example
+    ///
+    /// ```no_run
+    /// use jder_axum::response::json::JsonResponseError;
+    ///
+    /// let error: JsonResponseError = JsonResponseError::new()
+    ///     .message("Invalid title");
+    /// ```
+    pub fn message<Message: Into<String>>(
+        mut self,
+        message: Message,
+    ) -> Self {
+        self.message = Some(message.into());
+
+        self
+    }
+
+    /// Build the JSON response error.
+    ///
+    /// ## Example
+    ///
+    /// ```no_run
+    /// use jder_axum::response::json::JsonResponseError;
+    ///
+    /// let error: JsonResponseError = JsonResponseError::builder().build();
+    /// ```
+    #[deprecated = "No longer needed"]
+    pub fn build(self) -> Self {
+        self
     }
 }
 

@@ -68,11 +68,10 @@ where
             | Err(rej) => Err(CreateJsonResponse::failure()
                 .status(StatusCode::BAD_REQUEST)
                 .error(
-                    JsonResponseError::builder()
+                    JsonResponseError::new()
                         .code(ResponseError::Parse.as_code())
                         .path([rej.name().as_str()])
-                        .message(format!("{:?}", rej.reason()))
-                        .build(),
+                        .message(format!("{:?}", rej.reason())),
                 )
                 .create()),
         }
@@ -100,11 +99,10 @@ where
             | Err(rej) => Err(CreateJsonResponse::failure()
                 .status(StatusCode::BAD_REQUEST)
                 .error(
-                    JsonResponseError::builder()
+                    JsonResponseError::new()
                         .code(ResponseError::Parse.as_code())
                         .path([rej.name().as_str()])
                         .message(format!("{:?}", rej.reason()))
-                        .build()
                 )
                 .create()),
         }

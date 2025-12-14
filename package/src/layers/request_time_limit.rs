@@ -56,10 +56,9 @@ where
                     let res: Res = CreateJsonResponse::failure()
                         .status(StatusCode::GATEWAY_TIMEOUT)
                         .error(
-                            JsonResponseError::builder()
+                            JsonResponseError::new()
                                 .code(rer.as_code())
-                                .message(rer.as_message())
-                                .build(),
+                                .message(rer.as_message()),
                         )
                         .create();
 

@@ -21,10 +21,9 @@ impl From<TypedMultipartError> for TypedMultipartFailureResponse {
             success: false,
             data: None,
             errors: vec![
-                JsonResponseError::builder()
+                JsonResponseError::new()
                     .code(ResponseError::Parse.as_code())
-                    .message(error.to_string())
-                    .build(),
+                    .message(error.to_string()),
             ],
         }
     }

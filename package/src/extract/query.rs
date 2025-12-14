@@ -101,10 +101,9 @@ where
             | Err(rej) => Err(CreateJsonResponse::failure()
                 .status(rej.status())
                 .error(
-                    JsonResponseError::builder()
+                    JsonResponseError::new()
                         .code(ResponseError::Parse.as_code())
-                        .message(rej.body_text())
-                        .build(),
+                        .message(rej.body_text()),
                 )
                 .create()),
         }

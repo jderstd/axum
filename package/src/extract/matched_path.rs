@@ -59,10 +59,9 @@ where
             | Err(rej) => Err(CreateJsonResponse::failure()
                 .status(rej.status())
                 .error(
-                    JsonResponseError::builder()
+                    JsonResponseError::new()
                         .code(ResponseError::Parse.as_code())
-                        .message(rej.body_text())
-                        .build(),
+                        .message(rej.body_text()),
                 )
                 .create()),
         }
@@ -92,10 +91,9 @@ where
                 Err(CreateJsonResponse::failure()
                     .status(StatusCode::INTERNAL_SERVER_ERROR)
                     .error(
-                        JsonResponseError::builder()
+                        JsonResponseError::new()
                             .code(rer.as_code())
-                            .message(rer.as_message())
-                            .build(),
+                            .message(rer.as_message()),
                     )
                     .create())
             },
