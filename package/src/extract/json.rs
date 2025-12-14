@@ -1,4 +1,4 @@
-use axum::extract::Json as _Json;
+use axum::extract::{Json as _Json, rejection::JsonRejection};
 use axum_core::{
     extract::{FromRequest, OptionalFromRequest, Request},
     response::IntoResponse,
@@ -120,6 +120,8 @@ impl<T> From<T> for Json<T> {
     }
 }
 
+/// For public API, which will not be used internally.
+/// Therefore, no JsonResponse returned on error.
 impl<T> Json<T>
 where
     T: DeserializeOwned,
@@ -127,17 +129,10 @@ where
     /// Construct a `Json<T>` from a byte slice. Most users should prefer to use the `FromRequest` impl
     /// but special cases may require first extracting a `Request` into `Bytes` then optionally
     /// constructing a `Json<T>`.
-    pub fn from_bytes(bytes: &[u8]) -> Result<Self, Response> {
+    pub fn from_bytes(bytes: &[u8]) -> Result<Self, JsonRejection> {
         match _Json::<T>::from_bytes(bytes) {
             | Ok(val) => Ok(Self(val.0)),
-            | Err(rej) => Err(CreateJsonResponse::failure()
-                .status(rej.status())
-                .error(
-                    JsonResponseError::new()
-                        .code(ResponseError::Parse.as_code())
-                        .message(rej.body_text()),
-                )
-                .create()),
+            | Err(rej) => Err(rej),
         }
     }
 }
