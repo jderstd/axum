@@ -2,9 +2,16 @@
 
 ### Breaking Changes
 
-- Deprecate `send` function in response creation
+JSON response:
+
 - Remove `JsonResponseErrorBuilder` struct
+
+- Deprecate `send` function in response creation
 - Deprecate `builder`, `build` function in `JsonResponseError`
+
+Extractors:
+
+- Update result type of `from_bytes` in JSON extractor
 
 ### What's New
 
