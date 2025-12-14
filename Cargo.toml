@@ -29,4 +29,4 @@ tower-service = { version = "~0.3.0" }
 utoipa = { version = "^5.0.0" }
 
 # tests
-axum-test = { version = "^17.2.0" }
+axum-test = { version = "^18.4.1" }
