@@ -9,6 +9,9 @@ use crate::response::json::{
     error::{FAILURE_RESPONSE_DEFAULT, JsonResponseError},
 };
 
+/// JSON content type.
+const CONTENT_TYPE_JSON: &str = "application/json";
+
 /// JSON response.
 ///
 /// For API documentation generation with utoipa,
@@ -42,7 +45,7 @@ pub(crate) fn create_json_response_send<D: Serialize>(
     // a server error that supposed to be always work
     let server_error: Response = Response::builder()
         .status(StatusCode::INTERNAL_SERVER_ERROR)
-        .header(header::CONTENT_TYPE, "application/json")
+        .header(header::CONTENT_TYPE, CONTENT_TYPE_JSON)
         .body(Body::from(FAILURE_RESPONSE_DEFAULT.to_string()))
         .unwrap();
 
@@ -68,7 +71,7 @@ pub(crate) fn create_json_response_send<D: Serialize>(
 
         return match Response::builder()
             .status(StatusCode::BAD_REQUEST)
-            .header(header::CONTENT_TYPE, "application/json")
+            .header(header::CONTENT_TYPE, CONTENT_TYPE_JSON)
             .body(Body::from(body))
         {
             | Ok(res) => res,
@@ -85,7 +88,7 @@ pub(crate) fn create_json_response_send<D: Serialize>(
 
     header_map.append(
         header::CONTENT_TYPE,
-        match HeaderValue::from_str("application/json") {
+        match HeaderValue::from_str(CONTENT_TYPE_JSON) {
             | Ok(value) => value,
             | Err(_) => return server_error,
         },
