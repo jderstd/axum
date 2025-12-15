@@ -4,13 +4,13 @@ use serde::Serialize;
 use crate::response::{
     Response,
     json::{
-        error::JsonResponseError,
-        main::{JsonResponseState, create_json_response_send},
+        create::JsonResponseState, error::JsonResponseError,
+        functions::create::create_json_response_fn,
     },
 };
 
 /// Functions for creating an failure response.
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone)]
 pub struct JsonFailureResponseFunctions<D> {
     pub(crate) state: JsonResponseState<D>,
 }
@@ -193,23 +193,10 @@ impl<D: Serialize> JsonFailureResponseFunctions<D> {
     /// }
     /// ```
     pub fn create(self) -> Response {
-        create_json_response_send(self.state)
+        create_json_response_fn(self.state)
     }
 
     /// Finish the response creation.
-    ///
-    /// ## Example
-    ///
-    /// ```no_run
-    /// use jder_axum::response::{
-    ///     Response,
-    ///     json::CreateJsonResponse,
-    /// };
-    ///
-    /// async fn route() -> Response {
-    ///     CreateJsonResponse::failure().send()
-    /// }
-    /// ```
     #[deprecated = "Use `create` instead"]
     pub fn send(self) -> Response {
         self.create()
@@ -217,7 +204,9 @@ impl<D: Serialize> JsonFailureResponseFunctions<D> {
 }
 
 impl<D: Serialize> JsonFailureResponseFunctions<D> {
-    /// Add an error for the response.
+    /// Set errors for the response.
+    ///
+    /// This will override any existing errors.
     ///
     /// ## Example
     ///
@@ -231,56 +220,20 @@ impl<D: Serialize> JsonFailureResponseFunctions<D> {
     /// };
     ///
     /// async fn route() -> Response {
-    ///     let error: JsonResponseError = JsonResponseError::builder()
+    ///     let error_name: JsonResponseError = JsonResponseError::new()
     ///         .code("parse")
-    ///         .path(["json", "title"])
-    ///         .message("Invalid title")
-    ///         .build();
+    ///         .path(["json", "name"])
+    ///         .message("Invalid name");
     ///
-    ///     CreateJsonResponse::failure()
-    ///         .error(error)
-    ///         .create()
-    /// }
-    /// ```
-    pub fn error(
-        mut self,
-        error: JsonResponseError,
-    ) -> Self {
-        self.state.errors.push(error);
-
-        self
-    }
-
-    /// Add multiple errors for the response.
-    ///
-    /// ## Example
-    ///
-    /// ```no_run
-    /// use jder_axum::response::{
-    ///     Response,
-    ///     json::{
-    ///         JsonResponseError,
-    ///         CreateJsonResponse,
-    ///     },
-    /// };
-    ///
-    /// async fn route() -> Response {
-    ///     let error_title: JsonResponseError = JsonResponseError::builder()
+    ///     let error_age: JsonResponseError = JsonResponseError::new()
     ///         .code("parse")
-    ///         .path(["json", "title"])
-    ///         .message("Invalid title")
-    ///         .build();
-    ///
-    ///     let error_num: JsonResponseError = JsonResponseError::builder()
-    ///         .code("parse")
-    ///         .path(["json", "num"])
-    ///         .message("Invalid num")
-    ///         .build();
+    ///         .path(["json", "age"])
+    ///         .message("Invalid age");
     ///
     ///     CreateJsonResponse::failure()
     ///         .errors([
-    ///             error_title,
-    ///             error_num,
+    ///             error_name,
+    ///             error_age,
     ///         ])
     ///         .create()
     /// }
@@ -293,9 +246,99 @@ impl<D: Serialize> JsonFailureResponseFunctions<D> {
         V: IntoIterator<Item = E>,
         E: Into<JsonResponseError>,
     {
-        for error in errors {
-            self = self.error(error.into());
-        }
+        let errors: Vec<JsonResponseError> =
+            errors.into_iter().map(|e| e.into()).collect();
+
+        self.state.errors = errors;
+
+        self
+    }
+
+    /// Add multiple errors to the response.
+    ///
+    /// ## Example
+    ///
+    /// ```no_run
+    /// use jder_axum::response::{
+    ///     Response,
+    ///     json::{
+    ///         JsonResponseError,
+    ///         CreateJsonResponse,
+    ///     },
+    /// };
+    ///
+    /// async fn route() -> Response {
+    ///     let error_name: JsonResponseError = JsonResponseError::new()
+    ///         .code("parse")
+    ///         .path(["json", "name"])
+    ///         .message("Invalid name");
+    ///
+    ///     let error_age: JsonResponseError = JsonResponseError::new()
+    ///         .code("parse")
+    ///         .path(["json", "age"])
+    ///         .message("Invalid age");
+    ///
+    ///     CreateJsonResponse::failure()
+    ///         .add_errors([
+    ///             error_name,
+    ///             error_age,
+    ///         ])
+    ///         .create()
+    /// }
+    /// ```
+    pub fn add_errors<V, E>(
+        mut self,
+        errors: V,
+    ) -> Self
+    where
+        V: IntoIterator<Item = E>,
+        E: Into<JsonResponseError>,
+    {
+        self.state.errors.extend(errors.into_iter().map(|e| e.into()));
+
+        self
+    }
+
+    /// Add an error to the response.
+    ///
+    /// ## Example
+    ///
+    /// ```no_run
+    /// use jder_axum::response::{
+    ///     Response,
+    ///     json::{
+    ///         JsonResponseError,
+    ///         CreateJsonResponse,
+    ///     },
+    /// };
+    ///
+    /// async fn route() -> Response {
+    ///     let error: JsonResponseError = JsonResponseError::new()
+    ///         .code("parse")
+    ///         .path(["json", "title"])
+    ///         .message("Invalid title");
+    ///
+    ///     CreateJsonResponse::failure()
+    ///         .add_error(error)
+    ///         .create()
+    /// }
+    /// ```
+    pub fn add_error(
+        mut self,
+        error: JsonResponseError,
+    ) -> Self {
+        self.state.errors.push(error);
+
+        self
+    }
+
+    /// Add an error to the response.
+    #[deprecated = "Use `add_error` instead"]
+    pub fn error(
+        mut self,
+        error: JsonResponseError,
+    ) -> Self {
+        self.state.errors.push(error);
 
         self
     }

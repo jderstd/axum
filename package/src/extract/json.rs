@@ -74,7 +74,7 @@ where
             | Ok(val) => Ok(Self(val.0)),
             | Err(rej) => Err(CreateJsonResponse::failure()
                 .status(rej.status())
-                .error(
+                .add_error(
                     JsonResponseError::new()
                         .code(ResponseError::Parse.as_code())
                         .message(rej.body_text()),
@@ -102,7 +102,7 @@ where
             | Ok(None) => Ok(None),
             | Err(rej) => Err(CreateJsonResponse::failure()
                 .status(rej.status())
-                .error(
+                .add_error(
                     JsonResponseError::new()
                         .code(ResponseError::Parse.as_code())
                         .message(rej.body_text()),
@@ -150,7 +150,7 @@ where
                 .body(buf.into_inner().freeze()),
             | Err(err) => CreateJsonResponse::failure()
                 .status(StatusCode::INTERNAL_SERVER_ERROR)
-                .error(
+                .add_error(
                     JsonResponseError::new()
                         .code(ResponseError::Server.as_code())
                         .message(err.to_string()),

@@ -6,8 +6,11 @@ JSON response:
 
 - Remove `JsonResponseErrorBuilder` struct
 
+- Deprecate `error` function in `CreateJsonResponse`
 - Deprecate `send` function in response creation
 - Deprecate `builder`, `build` function in `JsonResponseError`
+
+- `errors` function of failure response overwrite existing errors now
 
 Extractors:
 
@@ -15,6 +18,9 @@ Extractors:
 
 ### What's New
 
+- Add builder functions for `JsonResponse`
+- Add `from` function for `JsonResponseError`
+- Add `add_errors`, `add_error` function for failure response
 - Add `create` function for response creation
 
 ### Migrating from 0.9.X to 0.10.0
@@ -47,6 +53,29 @@ use jder_axum::response::json::{
 -   .message("Invalid title")
 -   .build();
 +   .message("Invalid title");
+```
+
+For creating the JSON response with error
+
+```diff
+use jder_axum::response::{
+    Response,
+    json::{
+        JsonResponseError,
+        CreateJsonResponse,
+    },
+};
+
+async fn route() -> Response {
+-   let error: JsonResponseError = JsonResponseError::builder().build();
++   let error: JsonResponseError = JsonResponseError::new();
+
+    CreateJsonResponse::failure()
+-       .error(error)
++       .add_error(error)
+-       .send();
++       .create();
+}
 ```
 
 ## 0.9.1 (2025-11-26)

@@ -3,11 +3,13 @@ use serde::Serialize;
 
 use crate::response::{
     Response,
-    json::main::{JsonResponseState, create_json_response_send},
+    json::{
+        create::JsonResponseState, functions::create::create_json_response_fn,
+    },
 };
 
 /// Functions for creating a success response.
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone)]
 pub struct JsonSuccessResponseFunctions<D> {
     /// Internal state.
     pub(crate) state: JsonResponseState<D>,
@@ -191,23 +193,10 @@ impl<D: Serialize> JsonSuccessResponseFunctions<D> {
     /// }
     /// ```
     pub fn create(self) -> Response {
-        create_json_response_send(self.state)
+        create_json_response_fn(self.state)
     }
 
     /// Finish the response creation.
-    ///
-    /// ## Example
-    ///
-    /// ```no_run
-    /// use jder_axum::response::{
-    ///     Response,
-    ///     json::CreateJsonResponse,
-    /// };
-    ///
-    /// async fn route() -> Response {
-    ///     CreateJsonResponse::dataless().send()
-    /// }
-    /// ```
     #[deprecated = "Use `create` instead"]
     pub fn send(self) -> Response {
         self.create()

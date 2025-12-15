@@ -67,7 +67,7 @@ where
             | Ok(val) => Ok(Self(val.0)),
             | Err(rej) => Err(CreateJsonResponse::failure()
                 .status(StatusCode::BAD_REQUEST)
-                .error(
+                .add_error(
                     JsonResponseError::new()
                         .code(ResponseError::Parse.as_code())
                         .path([rej.name().as_str()])
@@ -98,7 +98,7 @@ where
             | Ok(None) => Ok(None),
             | Err(rej) => Err(CreateJsonResponse::failure()
                 .status(StatusCode::BAD_REQUEST)
-                .error(
+                .add_error(
                     JsonResponseError::new()
                         .code(ResponseError::Parse.as_code())
                         .path([rej.name().as_str()])

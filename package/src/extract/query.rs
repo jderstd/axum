@@ -100,7 +100,7 @@ where
             | Ok(val) => Ok(Self(val.0)),
             | Err(rej) => Err(CreateJsonResponse::failure()
                 .status(rej.status())
-                .error(
+                .add_error(
                     JsonResponseError::new()
                         .code(ResponseError::Parse.as_code())
                         .message(rej.body_text()),

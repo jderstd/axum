@@ -58,7 +58,7 @@ where
             | Ok(val) => Ok(MatchedPath(val.as_str().into())),
             | Err(rej) => Err(CreateJsonResponse::failure()
                 .status(rej.status())
-                .error(
+                .add_error(
                     JsonResponseError::new()
                         .code(ResponseError::Parse.as_code())
                         .message(rej.body_text()),
@@ -90,7 +90,7 @@ where
 
                 Err(CreateJsonResponse::failure()
                     .status(StatusCode::INTERNAL_SERVER_ERROR)
-                    .error(
+                    .add_error(
                         JsonResponseError::new()
                             .code(rer.as_code())
                             .message(rer.as_message()),

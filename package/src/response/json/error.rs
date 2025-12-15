@@ -60,7 +60,7 @@ impl Default for ResponseError {
     }
 }
 
-pub(crate) const FAILURE_RESPONSE_DEFAULT: &str = "{\"success\":false,\"data\":null,\"errors\":[{\"code\":\"server\",\"path\":[],\"message\":\"Internal server error.\"}]}";
+pub const FAILURE_RESPONSE_DEFAULT: &str = "{\"success\":false,\"data\":null,\"errors\":[{\"code\":\"server\",\"path\":[],\"message\":\"Internal server error.\"}]}";
 
 /// JSON response error.
 ///
@@ -95,19 +95,28 @@ impl JsonResponseError {
         }
     }
 
-    /// A builder function to create a JSON response error.
-    ///
+    /// Create a new JSON response error from an existing error.
+    /// 
     /// ## Example
     ///
     /// ```no_run
     /// use jder_axum::response::json::JsonResponseError;
     ///
-    /// let error: JsonResponseError = JsonResponseError::builder()
-    ///     .code("parse")
-    ///     .path(["json", "title"])
-    ///     .message("Invalid title")
-    ///     .build();
+    /// let error: JsonResponseError = JsonResponseError::new();
+    /// 
+    /// let error: JsonResponseError = JsonResponseError::from(error);
     /// ```
+    pub fn from<E: Into<JsonResponseError>>(error: E) -> Self {
+        let err: JsonResponseError = error.into();
+
+        Self {
+            code: err.code,
+            path: err.path,
+            message: err.message,
+        }
+    }
+
+    /// A builder function to create a JSON response error.
     #[deprecated = "Use `new` function instead"]
     pub fn builder() -> Self {
         Self::new()
@@ -174,14 +183,6 @@ impl JsonResponseError {
     }
 
     /// Build the JSON response error.
-    ///
-    /// ## Example
-    ///
-    /// ```no_run
-    /// use jder_axum::response::json::JsonResponseError;
-    ///
-    /// let error: JsonResponseError = JsonResponseError::builder().build();
-    /// ```
     #[deprecated = "No longer needed"]
     pub fn build(self) -> Self {
         self

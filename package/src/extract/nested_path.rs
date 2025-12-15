@@ -57,7 +57,7 @@ where
             | Ok(val) => Ok(NestedPath(val.as_str().into())),
             | Err(rej) => Err(CreateJsonResponse::failure()
                 .status(rej.status())
-                .error(
+                .add_error(
                     JsonResponseError::new()
                         .code(ResponseError::Parse.as_code())
                         .message(rej.body_text()),

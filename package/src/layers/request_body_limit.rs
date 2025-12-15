@@ -71,7 +71,7 @@ where
 
                     let res: Res = CreateJsonResponse::failure()
                         .status(StatusCode::PAYLOAD_TOO_LARGE)
-                        .error(
+                        .add_error(
                             JsonResponseError::new()
                                 .code(rer.as_code())
                                 .path(["request", "body"])
@@ -86,7 +86,7 @@ where
 
                     let res: Res = CreateJsonResponse::failure()
                         .status(StatusCode::BAD_REQUEST)
-                        .error(
+                        .add_error(
                             JsonResponseError::new()
                                 .code(rer.as_code())
                                 .path(["request", "body"])
