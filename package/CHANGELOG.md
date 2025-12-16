@@ -1,3 +1,9 @@
+## 0.10.1
+
+### What's Changed
+
+- Update documentation
+
 ## 0.10.0 (2025-12-16)
 
 ### Breaking Changes

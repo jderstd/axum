@@ -32,7 +32,7 @@ impl<D> JsonResponse<D> {
     }
 
     /// Create a JSON response from another JSON response.
-    /// 
+    ///
     /// ## Example
     ///
     /// ```no_run
@@ -45,11 +45,7 @@ impl<D> JsonResponse<D> {
     pub fn from<R: Into<JsonResponse<D>>>(response: R) -> Self {
         let res: JsonResponse<D> = response.into();
 
-        Self {
-            success: res.success,
-            data: res.data,
-            errors: res.errors,
-        }
+        Self { success: res.success, data: res.data, errors: res.errors }
     }
 
     /// Set the success status for the response.

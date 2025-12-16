@@ -204,17 +204,19 @@ where
     }
 
     /// Finish the response creation.
-    /// 
+    ///
     /// ## Example
-    /// 
+    ///
     /// ```no_run
     /// use jder_axum::response::{
     ///     Response,
     ///     CreateResponse
     /// };
-    /// 
+    ///
     /// async fn route() -> Response {
-    ///     CreateResponse::success().create()
+    ///     CreateResponse::success()
+    ///         .body("active")
+    ///         .create()
     /// }
     /// ```
     pub fn create(self) -> Response {

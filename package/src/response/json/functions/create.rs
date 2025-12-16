@@ -24,14 +24,12 @@ pub fn create_json_response_fn<D: Serialize>(
     // header map error
     if state.is_header_map_failed {
         // create error
-        let res: JsonResponse<D> = JsonResponse::new()
-            .success(false)
-            .errors([
-                JsonResponseError::new()
-                    .code(ResponseError::Parse.to_code())
-                    .path(["response", "header_map"])
-                    .message("Failed to create header map."),
-            ]);
+        let res: JsonResponse<D> = JsonResponse::new().success(false).errors([
+            JsonResponseError::new()
+                .code(ResponseError::Parse.to_code())
+                .path(["response", "header_map"])
+                .message("Failed to create header map."),
+        ]);
 
         // parse body
         let body: String = match serde_json::to_string(&res) {

@@ -96,24 +96,20 @@ impl JsonResponseError {
     }
 
     /// Create a new JSON response error from an existing error.
-    /// 
+    ///
     /// ## Example
     ///
     /// ```no_run
     /// use jder_axum::response::json::JsonResponseError;
     ///
     /// let error: JsonResponseError = JsonResponseError::new();
-    /// 
+    ///
     /// let error: JsonResponseError = JsonResponseError::from(error);
     /// ```
     pub fn from<E: Into<JsonResponseError>>(error: E) -> Self {
         let err: JsonResponseError = error.into();
 
-        Self {
-            code: err.code,
-            path: err.path,
-            message: err.message,
-        }
+        Self { code: err.code, path: err.path, message: err.message }
     }
 
     /// A builder function to create a JSON response error.
