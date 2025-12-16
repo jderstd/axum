@@ -94,7 +94,8 @@ where
                     header::CONTENT_TYPE,
                     "application/x-www-form-urlencoded",
                 )
-                .body(body),
+                .body(body)
+                .create(),
             | Err(err) => CreateJsonResponse::failure()
                 .status(StatusCode::INTERNAL_SERVER_ERROR)
                 .add_error(

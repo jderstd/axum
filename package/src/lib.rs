@@ -64,6 +64,7 @@
 //!     CreateResponse::success()
 //!         .header(header::CONTENT_TYPE, "text/plain")
 //!         .body("hi")
+//!         .create()
 //! }
 //! ```
 

@@ -147,7 +147,8 @@ where
         match serde_json::to_writer(&mut buf, &self.0) {
             | Ok(_) => CreateResponse::success()
                 .header(header::CONTENT_TYPE, "application/json")
-                .body(buf.into_inner().freeze()),
+                .body(buf.into_inner().freeze())
+                .create(),
             | Err(err) => CreateJsonResponse::failure()
                 .status(StatusCode::INTERNAL_SERVER_ERROR)
                 .add_error(

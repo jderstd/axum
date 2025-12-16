@@ -2,6 +2,10 @@
 
 ### Breaking Changes
 
+Response:
+
+- `CreateResponse` requires `create()` function to finish response creation now
+
 JSON response:
 
 - Remove `JsonResponseErrorBuilder` struct
@@ -24,6 +28,22 @@ Extractors:
 - Add `create` function for response creation
 
 ### Migrating from 0.9.X to 0.10.0
+
+For creating the response:
+
+```diff
+use jder_axum::response::{
+    Response,
+    CreateResponse,
+};
+
+async fn route() -> Response {
+-   CreateResponse::success().body("active")
++   CreateResponse::success()
++       .body("active")
++       .create()
+}
+```
 
 For creating the JSON response:
 

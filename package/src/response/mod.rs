@@ -44,6 +44,7 @@ where
     ///     CreateResponse::success()
     ///         .status(StatusCode::CREATED)
     ///         .body("created")
+    ///         .create()
     /// }
     /// ```
     pub fn status<S: Into<StatusCode>>(
@@ -70,6 +71,7 @@ where
     ///     CreateResponse::success()
     ///         .version(Version::HTTP_3)
     ///         .body("active")
+    ///         .create()
     /// }
     /// ```
     pub fn version<V: Into<Version>>(
@@ -99,6 +101,7 @@ where
     ///             "text/plain"
     ///         )
     ///         .body("active")
+    ///         .create()
     /// }
     /// ```
     pub fn header<K, V>(
@@ -155,6 +158,7 @@ where
     ///     CreateResponse::success()
     ///         .headers(headers)
     ///         .body("active")
+    ///         .create()
     /// }
     /// ```
     pub fn headers<K, V>(
@@ -187,14 +191,33 @@ where
     /// async fn route() -> Response {
     ///     CreateResponse::success()
     ///         .body("active")
+    ///         .create()
     /// }
     /// ```
     pub fn body(
         mut self,
         body: B,
-    ) -> Response {
+    ) -> Self {
         self.state.body = body;
 
+        self
+    }
+
+    /// Finish the response creation.
+    /// 
+    /// ## Example
+    /// 
+    /// ```no_run
+    /// use jder_axum::response::{
+    ///     Response,
+    ///     CreateResponse
+    /// };
+    /// 
+    /// async fn route() -> Response {
+    ///     CreateResponse::success().create()
+    /// }
+    /// ```
+    pub fn create(self) -> Response {
         let mut builder: Builder = Response::builder()
             .status(self.state.status)
             .version(self.state.version);
@@ -222,13 +245,14 @@ where
 /// async fn route() -> Response {
 ///     CreateResponse::success()
 ///         .body("active")
+///         .create()
 /// }
 /// ```
 #[derive(Debug, Clone, Copy, Default)]
 pub struct CreateResponse;
 
 impl CreateResponse {
-    /// Create a success response.
+    /// Create a response with HTTP 200 status code by default.
     pub fn success<B: Default>() -> ResponseFunctions<B> {
         ResponseFunctions {
             state: ResponseState {
@@ -240,7 +264,7 @@ impl CreateResponse {
         }
     }
 
-    /// Create a failure response.
+    /// Create a response with HTTP 400 status code by default.
     pub fn failure<B: Default>() -> ResponseFunctions<B> {
         ResponseFunctions {
             state: ResponseState {

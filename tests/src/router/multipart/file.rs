@@ -28,7 +28,8 @@ pub async fn route_multipart_file(
                         | None => "text/plain",
                     },
                 )
-                .body(image.contents.clone());
+                .body(image.contents.clone())
+                .create();
         },
         | None => {},
     }
