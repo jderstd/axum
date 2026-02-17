@@ -28,8 +28,6 @@ jobs:
                       code: "1.85.0"
                     - name: Stable
                       code: stable
-                    - name: Nightly
-                      code: nightly
         steps:
             - name: Checkout
               uses: actions/checkout@v4
