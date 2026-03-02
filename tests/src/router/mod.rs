@@ -73,5 +73,5 @@ pub fn create_router() -> IntoMakeServiceWithConnectInfo<Router, SocketAddr> {
 
 #[allow(dead_code)]
 pub fn create_server() -> TestServer {
-    TestServer::new(create_router()).unwrap()
+    TestServer::new(create_router())
 }
