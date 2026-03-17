@@ -5,7 +5,9 @@ pub mod success;
 use http::{HeaderMap, StatusCode, Version};
 
 use crate::response::json::{
-    create::{failure::CreateFailureJsonResponse, success::CreateSuccessJsonResponse},
+    create::{
+        failure::CreateFailureJsonResponse, success::CreateSuccessJsonResponse,
+    },
     error::JsonResponseError,
 };
 
