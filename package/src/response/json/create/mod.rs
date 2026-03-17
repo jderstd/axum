@@ -1,11 +1,12 @@
+pub mod base;
+pub mod failure;
+pub mod success;
+
 use http::{HeaderMap, StatusCode, Version};
 
 use crate::response::json::{
+    create::{failure::CreateFailureJsonResponse, success::CreateSuccessJsonResponse},
     error::JsonResponseError,
-    functions::{
-        failure::JsonFailureResponseFunctions,
-        success::JsonSuccessResponseFunctions,
-    },
 };
 
 /// Internal state.
@@ -116,8 +117,8 @@ impl CreateJsonResponse {
     ///     CreateJsonResponse::dataless().create()
     /// }
     /// ```
-    pub fn dataless() -> JsonSuccessResponseFunctions<()> {
-        JsonSuccessResponseFunctions { state: JsonResponseState::success() }
+    pub fn dataless() -> CreateSuccessJsonResponse<()> {
+        CreateSuccessJsonResponse { state: JsonResponseState::success() }
     }
 
     /// Create a success JSON response.
@@ -142,8 +143,8 @@ impl CreateJsonResponse {
     ///         .create()
     /// }
     /// ```
-    pub fn success<D>() -> JsonSuccessResponseFunctions<D> {
-        JsonSuccessResponseFunctions { state: JsonResponseState::success() }
+    pub fn success<D>() -> CreateSuccessJsonResponse<D> {
+        CreateSuccessJsonResponse { state: JsonResponseState::success() }
     }
 
     /// Create a failure JSON response.
@@ -160,7 +161,7 @@ impl CreateJsonResponse {
     ///     CreateJsonResponse::failure().create()
     /// }
     /// ```
-    pub fn failure() -> JsonFailureResponseFunctions<()> {
-        JsonFailureResponseFunctions { state: JsonResponseState::failure() }
+    pub fn failure() -> CreateFailureJsonResponse<()> {
+        CreateFailureJsonResponse { state: JsonResponseState::failure() }
     }
 }

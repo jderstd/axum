@@ -4,18 +4,18 @@ use serde::Serialize;
 use crate::response::{
     Response,
     json::{
-        create::JsonResponseState, error::JsonResponseError,
-        functions::create::create_json_response_fn,
+        create::JsonResponseState, create::base::create_json_response_fn,
+        error::JsonResponseError,
     },
 };
 
 /// Functions for creating an failure response.
 #[derive(Debug, Clone)]
-pub struct JsonFailureResponseFunctions<D> {
+pub struct CreateFailureJsonResponse<D> {
     pub(crate) state: JsonResponseState<D>,
 }
 
-impl<D: Serialize> JsonFailureResponseFunctions<D> {
+impl<D: Serialize> CreateFailureJsonResponse<D> {
     /// Set the status code for the response.
     ///
     /// ## Example
@@ -203,7 +203,7 @@ impl<D: Serialize> JsonFailureResponseFunctions<D> {
     }
 }
 
-impl<D: Serialize> JsonFailureResponseFunctions<D> {
+impl<D: Serialize> CreateFailureJsonResponse<D> {
     /// Set errors for the response.
     ///
     /// This will override any existing errors.

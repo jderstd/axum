@@ -1,3 +1,10 @@
+## Next
+
+### Breaking Changes
+
+- rename `JsonSuccessResponseFunctions` to `CreateSuccessJsonResponse`
+- rename `JsonFailureResponseFunctions` to `CreateFailureJsonResponse`
+
 ## 0.10.1 (2025-12-16)
 
 ### What's Changed

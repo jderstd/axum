@@ -3,19 +3,17 @@ use serde::Serialize;
 
 use crate::response::{
     Response,
-    json::{
-        create::JsonResponseState, functions::create::create_json_response_fn,
-    },
+    json::{create::JsonResponseState, create::base::create_json_response_fn},
 };
 
 /// Functions for creating a success response.
 #[derive(Debug, Clone)]
-pub struct JsonSuccessResponseFunctions<D> {
+pub struct CreateSuccessJsonResponse<D> {
     /// Internal state.
     pub(crate) state: JsonResponseState<D>,
 }
 
-impl<D: Serialize> JsonSuccessResponseFunctions<D> {
+impl<D: Serialize> CreateSuccessJsonResponse<D> {
     /// Set the status code for the response.
     ///
     /// ## Example
@@ -203,7 +201,7 @@ impl<D: Serialize> JsonSuccessResponseFunctions<D> {
     }
 }
 
-impl<D> JsonSuccessResponseFunctions<D> {
+impl<D> CreateSuccessJsonResponse<D> {
     /// Set the data for the response.
     ///
     /// ## Example
