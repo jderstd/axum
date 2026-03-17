@@ -9,7 +9,7 @@
 
 ### What's Changed
 
-- Update documentation
+- update documentation
 
 ## 0.10.0 (2025-12-16)
 
@@ -21,24 +21,24 @@ Response:
 
 JSON response:
 
-- Remove `JsonResponseErrorBuilder` struct
+- remove `JsonResponseErrorBuilder` struct
 
-- Deprecate `error` function in `CreateJsonResponse`
-- Deprecate `send` function in response creation
-- Deprecate `builder`, `build` function in `JsonResponseError`
+- deprecate `error` function in `CreateJsonResponse`
+- deprecate `send` function in response creation
+- deprecate `builder`, `build` function in `JsonResponseError`
 
 - `errors` function of failure response overwrite existing errors now
 
 Extractors:
 
-- Update result type of `from_bytes` in JSON extractor
+- update result type of `from_bytes` in JSON extractor
 
 ### What's New
 
-- Add builder functions for `JsonResponse`
-- Add `from` function for `JsonResponseError`
-- Add `add_errors`, `add_error` function for failure response
-- Add `create` function for response creation
+- add builder functions for `JsonResponse`
+- add `from` function for `JsonResponseError`
+- add `add_errors`, `add_error` function for failure response
+- add `create` function for response creation
 
 ### Migrating from 0.9.X to 0.10.0
 
@@ -115,45 +115,45 @@ async fn route() -> Response {
 
 ### What's Changed
 
-- Update `axum-extra` supported version from `~0.10.1` to `~0.12.0`
+- update `axum-extra` supported version from `~0.10.1` to `~0.12.0`
 
 ## 0.9.0 (2025-09-20)
 
 ### Breaking Changes
 
-- Status code changed in `RequestTimeLimit` layer:
+- status code changed in `RequestTimeLimit` layer:
     - `408` -> `504`
 
 ### What's Changed
 
-- Update documentation
+- update documentation
 
 ## 0.8.0 (2025-09-06)
 
 ### Breaking Changes
 
-- Rename `JsonResponseErrorCode` to `ResponseError`
+- rename `JsonResponseErrorCode` to `ResponseError`
 
 ### What's New
 
-- Add `new` functions for `JsonResponseError`
-- Add `Default` derive for `JsonResponseError`
-- Add `new` functions for `ResponseError`
-- Add `Default` derive for `ResponseError`
+- add `new` functions for `JsonResponseError`
+- add `Default` derive for `JsonResponseError`
+- add `new` functions for `ResponseError`
+- add `Default` derive for `ResponseError`
 
 ### What's Changes
 
-- Optimize internal functions
+- optimize internal functions
 
 ## 0.7.0 (2025-08-13)
 
 ### Breaking Changes
 
-- Support new standard
+- support new standard
 
 ### What's New
 
-- Add `builder` function for `JsonResponseError`
+- add `builder` function for `JsonResponseError`
 
 ### Migrating from 0.6.X to 0.7.0
 
@@ -186,45 +186,45 @@ async fn route() -> Response {
 
 ### What's Changed
 
-- Add missing default constructor for `RequestBodyLimit`
-- Add missing default constructor for `RequestTimeLimit`
+- add missing default constructor for `RequestBodyLimit`
+- add missing default constructor for `RequestTimeLimit`
 
 ## 0.6.0 (2025-05-20)
 
 ### What's New
 
-- Add `RequestTimeLimit` layer
+- add `RequestTimeLimit` layer
 
 ### What's Changed
 
-- Remove unnecessary implementation in `RequestBodyLimit` layer
+- remove unnecessary implementation in `RequestBodyLimit` layer
 
 ## 0.5.0 (2025-05-13)
 
 ### Breaking Changes
 
-- Move form module to `form` feature
-- Move json module to `json` feature
-- Move host module to `extra` feature
-- Move matched path module to `matched_path` feature
-- Move multipart module to `typed_multipart` feature
-- Move query module to `query` feature
-- Move connect info module to `tokio` feature
-- Move host module to `extra` feature
-- Rename `empty_to_none` to `empty_as_none`
-- Rename `Multipart` to `TypedMultipart`
-- Rename `MultipartFailureResponse` to `TypedMultipartFailureResponse`
-- Remove `State` as it is infallible
-- Remove `OriginalUri` as it is infallible
+- move form module to `form` feature
+- move json module to `json` feature
+- move host module to `extra` feature
+- move matched path module to `matched_path` feature
+- move multipart module to `typed_multipart` feature
+- move query module to `query` feature
+- move connect info module to `tokio` feature
+- move host module to `extra` feature
+- rename `empty_to_none` to `empty_as_none`
+- rename `Multipart` to `TypedMultipart`
+- rename `MultipartFailureResponse` to `TypedMultipartFailureResponse`
+- remove `State` as it is infallible
+- remove `OriginalUri` as it is infallible
 
 ### What's New
 
-- Add support for optional request
-- Add `Form` extractor
-- Add `Scheme` extractor
-- Add `TypedHeader` extractor
-- Add `RequestBodyLimit` layer
-- Add features:
+- add support for optional request
+- add `Form` extractor
+- add `Scheme` extractor
+- add `TypedHeader` extractor
+- add `RequestBodyLimit` layer
+- add features:
     - `form`
     - `json`
     - `matched_path`
@@ -236,14 +236,14 @@ async fn route() -> Response {
     - `extra`
     - `extra_typed_header`
     - `utoipa`
-- Add new derive to struct for `utoipa` feature:
+- add new derive to struct for `utoipa` feature:
     - `JsonResponse`
     - `JsonResponseError`
 
 ### What's Changed
 
-- Update minimum `axum` version to `0.8.3`
-- Update to 2024 edition
+- update minimum `axum` version to `0.8.3`
+- update to 2024 edition
 
 ### Migrating from 0.4.0 to 0.5.0
 
@@ -293,21 +293,21 @@ Update function name:
 
 ### What's Changed
 
-- Add support for axum 0.8
-- Update dependencies
+- add support for axum 0.8
+- update dependencies
 
 ## 0.3.1 (2024-12-16)
 
 ### What's Changed
 
-- Update dependencies
-- Update documentation
+- update dependencies
+- update documentation
 
 ## 0.3.0 (2024-10-26)
 
 ### Breaking Changes
 
-- Values renamed in `JsonResponseErrorCode`
+- values renamed in `JsonResponseErrorCode`
 
 ### What's Changed
 
@@ -321,35 +321,35 @@ Update function name:
 
 ### Breaking Changes
 
-- Enum `ResponseErrorCode` renamed to `JsonResponseErrorCode`
-- Values renamed in `JsonResponseErrorCode`:
+- enum `ResponseErrorCode` renamed to `JsonResponseErrorCode`
+- values renamed in `JsonResponseErrorCode`:
     - `ParseError` => `Parse`
     - `ServerError` => `Server`
     - `UnknownError` => `Unknown`
-- Move JSON related stuffs into `response::json` module
-- Changes in accepted value type of `error_code`:
+- move JSON related stuffs into `response::json` module
+- changes in accepted value type of `error_code`:
     - `String` => `&str`
-- Changes in accepted value type of `error_field`:
+- changes in accepted value type of `error_field`:
     - `String` => `&str`
-- Changes in accepted value type of `error_message`:
+- changes in accepted value type of `error_message`:
     - `String` => `&str`
 
 ### What's New
 
-- Add different derives for different structs
-- Add `get_header_from_key_value` function
-- Add `get_header_name_from_key` function
-- Add `get_header_value_from_value` function
-- Add `as_str` for `JsonResponseErrorCode`
+- add different derives for different structs
+- add `get_header_from_key_value` function
+- add `get_header_name_from_key` function
+- add `get_header_value_from_value` function
+- add `as_str` for `JsonResponseErrorCode`
 
 ### What's Changed
 
-- Changes in accepted value type of `key` in `header` and `headers`:
+- changes in accepted value type of `key` in `header` and `headers`:
     - `HeaderName` => `&str`/`String`/`HeaderName`
-- Changes in accepted value type of `value` in `header` and `headers`:
+- changes in accepted value type of `value` in `header` and `headers`:
     - `String` => `&str`/`String`/`HeaderValue`
-- Updates in documentation
+- updates in documentation
 
 ## 0.1.0 (2024-10-04)
 
-First release
+initial release
