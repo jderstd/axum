@@ -1,4 +1,4 @@
-## Next
+## 0.11.0 (2026-03-18)
 
 ### Breaking Changes
 
