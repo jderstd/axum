@@ -1763,7 +1763,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "tests"
+name = "test"
 version = "0.0.0"
 dependencies = [
  "axum",

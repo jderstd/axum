@@ -19,13 +19,13 @@ lint:
 fmt:
     cargo fmt
 
-# Run tests
+# Run test
 test:
-    cargo test -p tests -- --nocapture
+    cargo test -p test -- --nocapture
 
 # Run test server
 server:
-    cargo run -p tests
+    cargo run -p test
 
 # Publish package as dry-run
 publish-try:
