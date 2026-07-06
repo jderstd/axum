@@ -2,7 +2,7 @@
 //!
 //! A response builder for axum.
 //!
-//! This package includes different axum response builders,
+//! This crate includes different axum response builders,
 //! extractors and layers based on the JSON response structure specified in
 //! [JSON Data Errors Response (JDER)](https://github.com/jderstd/spec).
 //! With the builders and extractors provided, various kinds of

@@ -29,11 +29,11 @@ server:
 
 # Publish package as dry-run
 publish-try:
-    cd ./package && cargo publish --dry-run
+    cd ./crate && cargo publish --dry-run
 
 # Publish package
 publish:
-    cd ./package && cargo publish
+    cd ./crate && cargo publish
 
 # Clean
 clean:

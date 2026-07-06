@@ -1,16 +1,16 @@
 [workspace]
 resolver = "2"
 members = [
-    "package",
+    "crate",
     "tests",
 ]
 
 [workspace.dependencies]
 
-# workspace
-jder_axum = { path = "./package", features = ["all"] }
+# Workspace
+jder_axum = { path = "./crate", features = ["all"] }
 
-# package
+# Crate
 axum = { version = "~0.8.3", default-features = false, features = ["macros"] }
 axum-core = { version = "~0.5.2" }
 axum-extra = { version = "~0.12.0" }
@@ -28,5 +28,5 @@ tower-layer = { version = "~0.3.0" }
 tower-service = { version = "~0.3.0" }
 utoipa = { version = "^5.0.0" }
 
-# tests
+# Test
 axum-test = { version = "^20.0.0" }

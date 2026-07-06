@@ -2,11 +2,11 @@
 
 A response builder for axum.
 
-This package includes different axum response builders, extractors and layers based on the JSON response structure specified in [JSON Data Errors Response (JDER)](https://github.com/jderstd/spec). With the builders and extractors provided, various kinds of responses can be created easily instead of sending plain text responses.
+This crate includes different axum response builders, extractors and layers based on the JSON response structure specified in [JSON Data Errors Response (JDER)](https://github.com/jderstd/spec). With the builders and extractors provided, various kinds of responses can be created easily instead of sending plain text responses.
 
 ## Installation
 
-To install this package, run the following command:
+To install this crate, run the following command:
 
 ```bash
 cargo add jder_axum
