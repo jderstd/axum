@@ -26,7 +26,7 @@ serde_urlencoded = { version = "~0.7.0" }
 tokio = { version = "^1.40.0" }
 tower-layer = { version = "~0.3.0" }
 tower-service = { version = "~0.3.0" }
-utoipa = { version = "^5.0.0" }
+utoipa = { version = "^6.0.0" }
 
 # Test
 axum-test = { version = "^20.0.0" }
